@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "hexlet-code"
+version = "0.1.0"
+description = ""
+authors = ["sanswed <sanswed@gmail.com>"]
+readme = "README.md"
+packages = [{include = "hexlet_code"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+python-dotenv = "^1.0.0"
+dj-database-url = "^2.0.0"
+psycopg2-binary = "^2.9.6"
+gunicorn = "^20.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
