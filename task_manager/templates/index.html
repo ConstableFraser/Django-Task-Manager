@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% block title %}<title> {% translate "Task manager" %} </title> {% endblock %}
 {% block content %}
 <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
@@ -39,6 +40,8 @@
     <hr>
     <a class="btn btn-primary btn-lg" href="https://ru.hexlet.io">{% trans "To learn more" %}</a>
   </div>
+  <div>{{ BASE_DIR }}</div>
+  <div>{{ LOCALE_PATHS }}</div>
 </div>
 
     </div>

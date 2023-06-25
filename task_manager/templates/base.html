@@ -8,7 +8,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{{ LANGUAGE_CODE }}</title>
+        {% block title %} {% endblock title %}
         {% load bootstrap4 %}
         {% bootstrap_css %}
         {% bootstrap_javascript jquery=True %}
