@@ -1,0 +1,35 @@
+[
+    {
+        "model": "user.User",
+        "pk": 150,
+        "fields": {
+            "first_name": "Bill",
+            "last_name": "Gates",
+            "email": "win95@microsoft.com",
+            "username": "BG",
+            "password": "BillG007"
+        }
+    },
+    {
+        "model": "user.User",
+        "pk": 151,
+        "fields": {
+            "first_name": "Steve",
+            "last_name": "Jobs",
+            "email": "macos@apple.com",
+            "username": "SteveJobs",
+            "password": "SJobs_001"
+        }
+    },
+    {
+        "model": "user.User",
+        "pk": 152,
+        "fields": {
+            "first_name": "Andrei",
+            "last_name": "Gubin",
+            "email": "andrew@gubin.su",
+            "username": "AGubin",
+            "password": "AGubin100500"
+        }
+    }
+]

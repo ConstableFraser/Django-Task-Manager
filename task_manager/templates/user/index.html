@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}<title> {% translate "Task manager" %} </title> {% endblock %}
+{% block content %}
+        <h1 class="my-4">
+            Пользователи
+        </h1>
+
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Имя пользователя</th>
+                <th>Полное имя</th>
+                <th>Дата создания</th>
+                <th></th>
+              </tr>
+            </thead>
+
+        <tbody>
+       {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <td>{{ user.date_joined|date:"d.m.Y" }} {{ user.date_joined|time:"H:i" }}</td>
+                <td>
+                    <a href="/users/{{ user.id }}/update/">Изменить</a>
+                    <br>
+                    <a href="/users/{{ user.id }}/delete/">Удалить</a>
+                </td>
+            </tr>
+       {% endfor %}
+       </tbody>
+       </table>
+{% endblock %}

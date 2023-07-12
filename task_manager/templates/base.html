@@ -1,19 +1,25 @@
-<!DOCTYPE html>
-
-{% load static %}
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
+{% load static %}
 
+<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
+<link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {% block title %} {% endblock title %}
         {% load bootstrap4 %}
-        {% bootstrap_css %}
-        {% bootstrap_javascript jquery=True %}
     </head>
-        {% bootstrap_messages %}
-        {% block content %}
-        {% endblock content %}
+    <body class="d-flex flex-column min-vh-100">
+        {% include 'nav.html' %}
+        <div class="container wrapper flex-grow-1">
+            {% bootstrap_messages %}
+            {% block content %}
+            {% endblock content %}
+        </div>
+        {% include 'footer.html' %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+    </body>
 </html>
