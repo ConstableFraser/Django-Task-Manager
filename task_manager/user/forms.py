@@ -4,7 +4,7 @@ from django.contrib.auth.password_validation import (validate_password,
                                                      password_validators_help_text_html)
 
 from .models import User
-from .util import set_status
+from ..util import set_status
 
 
 class UserForm(forms.ModelForm):
@@ -28,6 +28,13 @@ class UserForm(forms.ModelForm):
         self.check_password(cleaned_data)
         self.check_username(cleaned_data)
         return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
 
     def check_password(self, cleaned_data):
         password = cleaned_data.get("password")

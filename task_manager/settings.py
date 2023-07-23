@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'task_manager',
     'bootstrap4',
     'task_manager.user',
+    'task_manager.status',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
+
+LOGIN_URL = '/login/'
 
 TEMPLATES = [
     {

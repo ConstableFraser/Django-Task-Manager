@@ -10,6 +10,6 @@
           {% csrf_token %}
           {% bootstrap_form form %}
           <input type="submit" class="btn btn-primary" value={{ commit_name }}>
-          <a href="/" id="cancel" name="cancel" class="btn btn-default btn-link"><u>Cancel</u></a>
+          <a href="/statuses/" id="cancel" name="cancel" class="btn btn-default btn-link"><u>Cancel</u></a>
        </form>
 {% endblock %}

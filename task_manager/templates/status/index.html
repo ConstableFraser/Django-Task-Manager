@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}<title> {% translate "Task manager" %} </title> {% endblock %}
+{% block content %}
+        <h1 class="my-4">
+            Statuses
+        </h1>
+        <div>
+            <a href="/statuses/create/">{% trans "Create status" %}</a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Create date</th>
+                <th></th>
+              </tr>
+            </thead>
+
+        <tbody>
+       {% for status in statuses %}
+            <tr>
+                <td>{{ status.id }}</td>
+                <td>{{ status.name }}</td>
+                <td>{{ status.created_at|date:"d.m.Y" }}
+                <td>
+                    <a href="/statuses/{{ status.id }}/update/">Изменить</a>
+                    <br>
+                    <a href="/statuses/{{ status.id }}/delete/">Удалить</a>
+                </td>
+            </tr>
+       {% endfor %}
+       </tbody>
+       </table>
+{% endblock %}
