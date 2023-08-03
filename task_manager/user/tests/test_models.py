@@ -27,10 +27,9 @@ class UserTestModelCase(TestCase):
 
 
     def test_delete_user(self):
-        count_before = User.objects.only('id').count()
-        Gates = User.objects.get(first_name='Bill', last_name='Gates')
-        Jobs = User.objects.get(first_name='Steve', last_name='Jobs')
+        Gates = User.objects.get(username='BG')
+        Jobs = User.objects.get(username='SteveJobs')
         Gates.delete()
         Jobs.delete()
-        count_after = User.objects.only('id').count()
-        self.assertEqual(count_after, count_before-2)
+        self.assertEqual(User.objects.filter(username='BG').count(), 0)
+        self.assertEqual(User.objects.filter(username='SteveJobs').count(), 0)

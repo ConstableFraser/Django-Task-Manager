@@ -30,5 +30,5 @@ class StatusTestModelCase(TestCase):
         default = Status.objects.get(name='default')
         completed.delete()
         default.delete()
-        count_after = Status.objects.only('id').count()
-        self.assertEqual(count_after, count_before-2)
+        self.assertEqual(Status.objects.filter(name='completed').count(), 0)
+        self.assertEqual(Status.objects.filter(name='default').count(), 0)

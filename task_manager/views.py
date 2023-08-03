@@ -26,5 +26,5 @@ class UserSignIn(View):
 
 def logout_view(request):
     logout(request)
-    messages.success(request, 'You are sign out')
+    messages.info(request, 'You are sign out')
     return redirect('/')

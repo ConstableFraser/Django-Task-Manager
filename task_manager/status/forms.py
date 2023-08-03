@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Status as Status
+from .models import Status
 from ..util import set_status
 from ..strings import STATUS_EXIST_STR
 

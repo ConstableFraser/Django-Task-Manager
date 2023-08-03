@@ -52,3 +52,33 @@ msgstr "Узнать больше"
 
 msgid "Hexlet"
 msgstr "Hexlet"
+
+msgid "Statuses"
+msgstr "Статусы"
+
+msgid "Create status"
+msgstr "Создать статус"
+
+msgid "Tasks"
+msgstr "Задачи"
+
+msgid "Create task"
+msgstr "Создать задачу"
+
+msgid "A task can only be deleted by its author"
+msgstr "Задачу может удалить только ее автор"
+
+msgid "Can't delete status because it's in use"
+msgstr "Невозможно удалить статус, потому что он используется"
+
+msgid "You do not have permissions to change another user."
+msgstr "У вас нет прав для изменения другого пользователя."
+
+msgid "Unable to delete user because it is in use"
+msgstr "Невозможно удалить пользователя, потому что он используется"
+
+msgid "Task deleted successfully"
+msgstr "Задача успешо удалена"
+
+msgid "Task updated successfully"
+msgstr "Статус успешно удален"

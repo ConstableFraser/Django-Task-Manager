@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, re_path
+from django.views.generic import TemplateView
 
 from . import views
 
@@ -14,4 +15,5 @@ urlpatterns = [
     path('<int:pk>/delete/',
          views.UserDeleteView.as_view(),
          name='user_delete'),
+    re_path(r'.*', TemplateView.as_view(template_name='404.html'), name='404'),
 ]
