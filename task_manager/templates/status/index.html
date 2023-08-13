@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}<title> {% translate "Task manager" %} </title> {% endblock %}
+{% block header %} {{ header }} {% endblock %}
 {% block content %}
-        <h1 class="my-4">
-            Statuses
-        </h1>
         <div>
             <a href="/statuses/create/">{% trans "Create status" %}</a>
         </div>

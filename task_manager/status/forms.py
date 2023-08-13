@@ -14,12 +14,11 @@ class StatusForm(forms.ModelForm):
         super(StatusForm, self).__init__(*args, **kwargs)
         self.fields['name'].widget.attrs.update({'autofocus': True,
                                                  'required': True})
-        self.fields['name'].required = True
 
     def clean(self):
         cleaned_data = super(StatusForm, self).clean()
         name = cleaned_data.get("name")
-        if Status.objects.filter(name=name):
+        if Status.objects.filter(name=name).exclude(id=self.instance.id):
             set_status(self.fields['name'], 'invalid')
             raise forms.ValidationError(STATUS_EXIST_STR)
 

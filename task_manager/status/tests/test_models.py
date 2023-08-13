@@ -1,34 +1,39 @@
 from django.test import TestCase
+from django.db import IntegrityError
+from django.db.models.deletion import ProtectedError
 
 from task_manager.status.models import Status
 
 
 class StatusTestModelCase(TestCase):
-    fixtures = ['statuses.json']
-
+    fixtures = ['Status_statuses.json', 'Status_users.json', 'Status_tasks.json']
 
     def test_create_status(self):
-        default = Status.objects.get(name='default')
-        backlog = Status.objects.get(name='backlog')
-        completed = Status.objects.get(name='completed')
+        default = Status.objects.get(id=112)
+        backlog = Status.objects.get(id=110)
+        completed = Status.objects.get(id=111)
         self.assertEqual(f'{default}', 'default')
         self.assertEqual(f'{backlog}', 'backlog')
         self.assertEqual(f'{completed}', 'completed')
+        self.assertTrue(Status.objects.create(name="what_the_status of \
+                                             this process [temporary]"))
+        with self.assertRaises(IntegrityError):
+            self.assertFalse(Status.objects.create(name="default"))
 
 
     def test_update_status(self):
-        completed = Status.objects.get(name='completed')
-        completed.name = 'Done'
-        completed.save()
-        done = Status.objects.get(name='Done')
+        backlog = Status.objects.get(id=110)
+        backlog.name = 'Done'
+        backlog.save()
+        done = Status.objects.get(id=110)
         self.assertEqual(f'{done}', 'Done')
 
 
     def test_delete_status(self):
-        count_before = Status.objects.only('id').count()
-        completed = Status.objects.get(name='completed')
-        default = Status.objects.get(name='default')
-        completed.delete()
+        completed = Status.objects.get(id=111)
+        default = Status.objects.get(id=112)
+        with self.assertRaises(ProtectedError):
+            completed.delete()
         default.delete()
-        self.assertEqual(Status.objects.filter(name='completed').count(), 0)
-        self.assertEqual(Status.objects.filter(name='default').count(), 0)
+        self.assertEqual(Status.objects.filter(id=111).count(), 1)
+        self.assertEqual(Status.objects.filter(id=112).count(), 0)

@@ -13,5 +13,6 @@ urlpatterns = [
     path('users/', include('task_manager.user.urls')),
     path('statuses/', include('task_manager.status.urls')),
     path('tasks/', include('task_manager.task.urls')),
+    path('labels/', include('task_manager.label.urls')),
     re_path(r'.*', TemplateView.as_view(template_name='404.html'), name='404'),
 ]

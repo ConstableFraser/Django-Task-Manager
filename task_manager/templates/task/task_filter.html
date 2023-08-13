@@ -1,0 +1,12 @@
+{% load bootstrap4 %}
+
+<div class="card mb-3">
+  <div class="card-body bg-light">
+    <form class="justify-content-center" method="GET">
+        {% for field in filter.form %}
+            {% bootstrap_field field bound_css_class='' %}
+        {% endfor %}
+        <input type="submit" class="btn btn-primary" value="Show">
+    </form>
+  </div>
+</div>

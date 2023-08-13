@@ -1,7 +1,9 @@
 from django.views import View
 from django.urls import reverse
 from django.contrib import messages
+from django_filters.views import FilterView
 from django.shortcuts import render, redirect
+from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect, HttpResponseNotModified
@@ -9,6 +11,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Task
 from .forms import TaskForm
+from .filter import TasksFilter
 from ..strings import (NEED_TO_SIGNIN_STR,
                        TASK_CREATED_STR,
                        TASK_UPDATED_STR,
@@ -16,26 +19,17 @@ from ..strings import (NEED_TO_SIGNIN_STR,
                        )
 
 
-class TaskListView(LoginRequiredMixin, View):
+class TaskListView(LoginRequiredMixin, FilterView):
+    model = Task
     redirect_field_name = ""
     raise_exception = True
     permission_denied_message = NEED_TO_SIGNIN_STR
+    filterset_class = TasksFilter
+    template_name = 'task/index.html'
 
     def handle_no_permission(self):
-        messages.success(self.request, self.permission_denied_message)
+        messages.error(self.request, self.permission_denied_message)
         return redirect(reverse('signin'), code=302)
-
-    def get(self, request, *args, **kwargs):
-        tasks = Task.objects.only('id',
-                                  'name',
-                                  'status__name',
-                                  str('author'),
-                                  str('executor'),
-                                  'created_at'
-                                  ).order_by('-id')
-        return render(request, 'task/index.html',
-                      context={'tasks': tasks}
-                      )
 
 
 class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
@@ -52,7 +46,7 @@ class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Create task"
+        context["header"] = "Create task"
         context["commit_name"] = "Create"
         return context
 
@@ -75,14 +69,14 @@ class TaskUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Update task"
+        context["header"] = "Update task"
         context["commit_name"] = "Update"
         return context
 
 
 class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Task
-    template_name = 'task/task_confirm_delete.html'
+    template_name = 'confirm_delete.html'
     success_url = '/tasks/'
     success_message = TASK_DELETED_STR
     permission_denied_message = NEED_TO_SIGNIN_STR
@@ -93,7 +87,7 @@ class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Delete task"
+        context["header"] = "Delete task"
         return context
 
     def get(self, request, *args, **kwargs):
@@ -106,17 +100,17 @@ class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return self.render_to_response(self.get_context_data())
 
 
-class TaskReadView(LoginRequiredMixin, DeleteView):
+class TaskReadView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'task/task_card.html'
     success_url = '/tasks/'
     permission_denied_message = NEED_TO_SIGNIN_STR
 
     def handle_no_permission(self):
-        messages.success(self.request, self.permission_denied_message)
+        messages.error(self.request, self.permission_denied_message)
         return redirect(reverse('signin'), code=302)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "View task"
+        context["header"] = "View task"
         return context

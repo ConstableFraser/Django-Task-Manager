@@ -4,7 +4,7 @@ from task_manager.user.models import User
 
 
 class UserTestModelCase(TestCase):
-    fixtures = ['users.json']
+    fixtures = ['User_users.json']
 
 
     def test_create_user(self):

@@ -2,8 +2,15 @@
 {% load i18n %}
 {% block title %}<title>{% translate "Task manager" %}</title>{% endblock %}
 {% load bootstrap4 %}
+{% load static %}
+
 {% block content %}
 <p></p>
-<p>Page not found. 404 code</p>
-
+<p>
+ <div style="text-align: center; width: 100%;">
+  <img src="{% static '/images/figaro.png' %}" alt="Page not found. 404 code" style="margin:100px 0px">
+  <hr>
+     <p style="background-color:#f0f0f0; font-family:verdana; color:blue">Page not found. 404 code</p>
+ </div>
+</p>
 {% endblock %}

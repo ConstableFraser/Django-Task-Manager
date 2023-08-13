@@ -14,6 +14,7 @@ from ..strings import (NEED_TO_SIGNIN_STR,
                        STATUS_CREATED_STR,
                        STATUS_UPDATED_STR,
                        STATUS_DELETED_STR,
+                       STATUS_ISNTDELETE_STR,
                        )
 
 
@@ -31,7 +32,7 @@ class StatusListView(LoginRequiredMixin, View):
                                        'created_at'
                                        ).order_by('-id')
         return render(request, 'status/index.html',
-                      context={'statuses': statuses}
+                      context={'statuses': statuses, 'header': 'Statuses'}
                       )
 
 
@@ -49,7 +50,7 @@ class StatusCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Create status"
+        context["header"] = "Create status"
         context["commit_name"] = "Create"
         return context
 
@@ -68,14 +69,14 @@ class StatusUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Update status"
+        context["header"] = "Update status"
         context["commit_name"] = "Update"
         return context
 
 
 class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Status
-    template_name = 'status/status_confirm_delete.html'
+    template_name = 'confirm_delete.html'
     success_url = '/statuses/'
     success_message = STATUS_DELETED_STR
     
@@ -89,5 +90,10 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         try:
             return self.delete(request, *args, **kwargs)
         except ProtectedError:
-            messages.error(self.request, "Can't delete status because it's in use")
+            messages.error(self.request, STATUS_ISNTDELETE_STR)
             return HttpResponseRedirect('/statuses/')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["header"] = "Delete status"
+        return context

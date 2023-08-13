@@ -23,7 +23,7 @@ class UsersListView(View):
                                   'last_name', 'date_joined'
                                   ).order_by('-id')
         return render(request, 'user/index.html',
-                      context={'users': users}
+                      context={'users': users, 'header': 'Users'}
                       )
 
 
@@ -35,7 +35,7 @@ class UserCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Create an user"
+        context["title"] = "Create a user"
         context["commit_name"] = "Create"
         return context
 
@@ -54,7 +54,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Update an user"
+        context["header"] = "Update a user"
         context["commit_name"] = "Update"
         return context
 
@@ -70,7 +70,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 class UserDeleteView(LoginRequiredMixin, DeleteView):
     model = User
-    template_name = 'user/user_confirm_delete.html'
+    template_name = 'confirm_delete.html'
     permission_denied_message = NEED_TO_SIGNIN_STR
     success_url = '/users/'
 
@@ -86,6 +86,11 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         self.object = self.get_object()
         self.get_context_data(object=self.object)
         return self.render_to_response(self.get_context_data())
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["header"] = "Delete a user"
+        return context
 
     def post(self, request, *args, **kwargs):
         try:

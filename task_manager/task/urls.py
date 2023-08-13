@@ -1,7 +1,8 @@
 from django.urls import path, re_path
 from django.views.generic import TemplateView
 
-from . import views
+from .import views
+from .models import Task
 
 
 urlpatterns = [

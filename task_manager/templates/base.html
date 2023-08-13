@@ -6,6 +6,7 @@
 <html lang="{{ LANGUAGE_CODE }}">
 
 <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,8 +17,10 @@
         {% include 'nav.html' %}
         <div class="container wrapper flex-grow-1">
             {% bootstrap_messages %}
-            {% block content %}
-            {% endblock content %}
+            <h1 class="my-4">
+            {% block header %} {% endblock header %}
+            </h1>
+            {% block content %} {% endblock content %}
         </div>
         {% include 'footer.html' %}
         {% bootstrap_css %}

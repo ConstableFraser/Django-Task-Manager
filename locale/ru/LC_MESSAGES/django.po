@@ -82,3 +82,21 @@ msgstr "Задача успешо удалена"
 
 msgid "Task updated successfully"
 msgstr "Статус успешно удален"
+
+msgid "hold down the 'Ctrl' key for multiple selection"
+msgstr "удерживайте 'Ctrl' для множественного выбора"
+
+msgid "Create label"
+msgstr "Создать метку"
+
+msgid "Create"
+msgstr "Создать"
+
+msgid "Update"
+msgstr "Изменить"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Update label"
+msgstr "Изменить метку"

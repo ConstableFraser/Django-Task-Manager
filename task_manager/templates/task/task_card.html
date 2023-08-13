@@ -2,24 +2,31 @@
 {% load i18n %}
 {% block title %}<title> {% translate "Task manager" %} </title> {% endblock %}
 {% load bootstrap4 %}
+
+{% block header %}
+{{ header }}
+{% endblock %}
+
 {% block content %}
-        <h1 class="my-4">
-           {{ title }}
-        </h1>
         <div><a href="/tasks/">{% translate "< to tasks" %}</a></div>
         <div class="card bg-light mb-3" style="max-width: 70rem;">
         <div class="card-header"><h3>{{ task.name }}</h3></div>
+
             <div class="card-body">
                 <div><mark>{% translate "Description" %}</mark></div>
-                <p class="card-text">{{ task.description }}</p>
+                <p>{{ task.description }}</p>
                 <div><mark>{% translate "Author" %}</mark></div>
-                <p class="card-text">{{ task.author }}</p>
+                <p>{{ task.author }}</p>
                 <div><mark>{% translate "Executor" %}</mark></div>
-                <p class="card-text">{{ task.executor }}</p>
+                <p>{{ task.executor }}</p>
                 <div><mark>{% translate "Status" %}</mark></div>
-                <p class="card-text">{{ task.status }}</p>
+                <p>{{ task.status }}</p>
                 <div><mark>{% translate "Labels" %}</mark></div>
-                <!-- <p class="card-text">{{ task.author }}</p> -->
+                    <ul>
+                        {% for label in task.labels.all|dictsort:"name" %}
+                            <li>{{ label.name }}</li>
+                        {% endfor %}
+                    </ul>
                 <hr>
                 <div>
                     <a href="/tasks/{{ task.id }}/update/">{% translate "Update" %}</a>
@@ -28,7 +35,3 @@
                 </div>
             </div>
 {% endblock %}
-
-<!--
-<h5 class="card-title">Light card title</h5>
--->
