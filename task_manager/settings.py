@@ -17,7 +17,6 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-LOCALE_PATH = Path(__file__).resolve().parent
 
 load_dotenv()
 
@@ -145,11 +144,10 @@ USE_I18N = True
 USE_TZ = True
 
 LANGUAGES = [
-    ('en', 'English'),
     ('ru', 'Russian'),
 ]
 
-LOCALE_PATHS = [os.path.join(LOCALE_PATH, 'locale'),]
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'),]
 
 ROLLBAR = {
     'access_token': os.environ.get(ROLLBAR_TOKEN),
