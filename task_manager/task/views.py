@@ -45,6 +45,8 @@ class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return redirect(reverse('signin'), code=302)
 
     def get_context_data(self, **kwargs):
+        a = None
+        a.hello()
         context = super().get_context_data(**kwargs)
         context["header"] = "Create task"
         context["commit_name"] = "Create"
@@ -68,6 +70,8 @@ class TaskUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return redirect(reverse('signin'), code=302)
 
     def get_context_data(self, **kwargs):
+        from django.conf import settings
+        messages.info(self.request, settings.LOCALE_PATHS[0])
         context = super().get_context_data(**kwargs)
         context["header"] = "Update task"
         context["commit_name"] = "Update"
