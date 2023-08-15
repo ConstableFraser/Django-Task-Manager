@@ -31,6 +31,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', False)
 
+# ACCESS TOKEN OF ROLLBAR
+ROLLBAR_TOKEN = os.getenv('ROLLBAR_TOKEN')
+
 ALLOWED_HOSTS = [
     'webserver',
     '127.0.0.1',
@@ -69,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
 
 ROOT_URLCONF = 'task_manager.urls'
@@ -137,17 +141,21 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
-
 
 LANGUAGES = [
     ('en', 'English'),
     ('ru', 'Russian'),
 ]
 
-LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'),]
+LOCALE_PATHS = ['./locale',]
+
+ROLLBAR = {
+    'access_token': os.environ.get(ROLLBAR_TOKEN),
+    'environment': 'development' if DEBUG else 'production',
+    'code_version': '1.0',
+    'root': BASE_DIR,
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
