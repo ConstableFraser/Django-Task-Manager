@@ -45,8 +45,6 @@ class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return redirect(reverse('signin'), code=302)
 
     def get_context_data(self, **kwargs):
-        a = None
-        a.hello()
         context = super().get_context_data(**kwargs)
         context["header"] = "Create task"
         context["commit_name"] = "Create"
