@@ -1,6 +1,6 @@
 from django.views import View
-from django.urls import reverse
 from django.contrib import messages
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.db.models.deletion import ProtectedError
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -40,7 +40,7 @@ class LabelCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Label
     form_class = LabelForm
     template_name = 'label/label_form.html'
-    success_url = '/labels/'
+    success_url = reverse_lazy('labels')
     success_message = LABEL_CREATED_STR
     permission_denied_message = NEED_TO_SIGNIN_STR
 
@@ -59,7 +59,7 @@ class LabelUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Label
     form_class = LabelForm
     template_name = 'label/label_form.html'
-    success_url = '/labels/'
+    success_url = reverse_lazy('labels')
     permission_denied_message = NEED_TO_SIGNIN_STR
     success_message = LABEL_UPDATED_STR
 
@@ -77,7 +77,7 @@ class LabelUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Label
     template_name = 'confirm_delete.html'
-    success_url = '/labels/'
+    success_url = reverse_lazy('labels')
     success_message = LABEL_DELETED_STR
     
     permission_denied_message = NEED_TO_SIGNIN_STR
@@ -91,9 +91,10 @@ class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
             return self.delete(request, *args, **kwargs)
         except ProtectedError:
             messages.error(self.request, LABEL_ISNTDELETE_STR)
-            return HttpResponseRedirect('/labels/')
+            return HttpResponseRedirect(reverse('labels'))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["header"] = "Delete label"
+        context["back_referer"] = self.request.META.get('HTTP_REFERER')
         return context

@@ -1,8 +1,9 @@
 from django.views import View
-from django.urls import reverse
 from django.contrib import messages
 from django_filters.views import FilterView
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import render, redirect
+from django.views.generic.base import ContextMixin
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -31,12 +32,17 @@ class TaskListView(LoginRequiredMixin, FilterView):
         messages.error(self.request, self.permission_denied_message)
         return redirect(reverse('signin'), code=302)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["header"] = "Tasks"
+        return context
+
 
 class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'task/task_form.html'
-    success_url = '/tasks/'
+    success_url = reverse_lazy('tasks')
     success_message = TASK_CREATED_STR
     permission_denied_message = NEED_TO_SIGNIN_STR
 
@@ -59,7 +65,7 @@ class TaskUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = 'task/task_form.html'
-    success_url = '/tasks/'
+    success_url = reverse_lazy('tasks')
     permission_denied_message = NEED_TO_SIGNIN_STR
     success_message = TASK_UPDATED_STR
 
@@ -79,7 +85,7 @@ class TaskUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Task
     template_name = 'confirm_delete.html'
-    success_url = '/tasks/'
+    success_url = reverse_lazy('tasks')
     success_message = TASK_DELETED_STR
     permission_denied_message = NEED_TO_SIGNIN_STR
 
@@ -90,6 +96,7 @@ class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["header"] = "Delete task"
+        context["back_referer"] = self.request.META.get('HTTP_REFERER')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -105,7 +112,7 @@ class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 class TaskReadView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'task/task_card.html'
-    success_url = '/tasks/'
+    success_url = reverse_lazy('tasks')
     permission_denied_message = NEED_TO_SIGNIN_STR
 
     def handle_no_permission(self):

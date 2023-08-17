@@ -14,6 +14,7 @@ import os
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
+from django.utils.translation import gettext_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -135,16 +136,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'ru'
+
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-LANGUAGES = [
-    ('ru', 'Russian'),
-    ('en', 'English'),
-]
 
+LANGUAGES = [
+    ("en", gettext_lazy("English")),
+    ("ru", gettext_lazy("Russian")),
+]
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'),]
 
 ROLLBAR = {

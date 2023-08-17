@@ -25,6 +25,8 @@ class Task(models.Model):
     labels = models.ManyToManyField(Label,
                                     through='TaskToLabel',
                                     through_fields=('task', 'label'))
+    class Meta:
+        ordering = ['-id']
 
     def __str__(self):
         return self.name

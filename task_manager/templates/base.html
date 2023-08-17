@@ -2,9 +2,10 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
 
-<link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+<link rel="shortcut icon" type="image/png" href="{% static 'task_manager/favicon.png' %}"/>
 
     <head>
         <meta charset="UTF-8">
