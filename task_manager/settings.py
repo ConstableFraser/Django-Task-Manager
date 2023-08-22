@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+import rollbar
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
@@ -31,9 +32,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', False)
-
-# ACCESS TOKEN OF ROLLBAR
-ROLLBAR_TOKEN = os.getenv('ROLLBAR_TOKEN')
 
 ALLOWED_HOSTS = [
     'webserver',
@@ -149,12 +147,17 @@ LANGUAGES = [
 ]
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'),]
 
+# ACCESS TOKEN OF ROLLBAR
+ROLLBAR_TOKEN = os.getenv('ROLLBAR_TOKEN')
+
 ROLLBAR = {
-    'access_token': os.environ.get(ROLLBAR_TOKEN),
+    'access_token': os.getenv(ROLLBAR_TOKEN),
     'environment': 'development' if DEBUG else 'production',
     'code_version': '1.0',
     'root': BASE_DIR,
 }
+
+rollbar.init(**ROLLBAR)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
