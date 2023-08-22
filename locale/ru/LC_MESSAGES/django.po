@@ -41,6 +41,9 @@ msgstr "Пользователи"
 msgid "Sign in"
 msgstr "Вход"
 
+msgid "Sign out"
+msgstr "Выход"
+
 msgid "Sign up"
 msgstr "Регистрация"
 
@@ -55,6 +58,9 @@ msgstr "Hexlet"
 
 msgid "Statuses"
 msgstr "Статусы"
+
+msgid "Labels"
+msgstr "Метки"
 
 msgid "Create status"
 msgstr "Создать статус"
@@ -71,17 +77,8 @@ msgstr "Задачу может удалить только ее автор"
 msgid "Can't delete status because it's in use"
 msgstr "Невозможно удалить статус, потому что он используется"
 
-msgid "You do not have permissions to change another user."
-msgstr "У вас нет прав для изменения другого пользователя."
-
-msgid "Unable to delete user because it is in use"
-msgstr "Невозможно удалить пользователя, потому что он используется"
-
 msgid "Task deleted successfully"
 msgstr "Задача успешо удалена"
-
-msgid "Task updated successfully"
-msgstr "Статус успешно удален"
 
 msgid "hold down the 'Ctrl' key for multiple selection"
 msgstr "удерживайте 'Ctrl' для множественного выбора"
@@ -95,8 +92,172 @@ msgstr "Создать"
 msgid "Update"
 msgstr "Изменить"
 
+msgid "Yes, delete"
+msgstr "Да, удалить"
+
 msgid "Delete"
 msgstr "Удалить"
 
 msgid "Update label"
 msgstr "Изменить метку"
+
+msgid "First name"
+msgstr "Имя"
+
+msgid "Last name"
+msgstr "Фамилия"
+
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgid "Update a user"
+msgstr "Изменение пользователя"
+
+msgid "Your password must contain at least 3 characters."
+msgstr "Ваш пароль должен содержать как минимум 3 символа."
+
+msgid "Confirm password"
+msgstr "Подтверждение пароля"
+
+msgid "To confirm, please enter your password again."
+msgstr "Для подтверждения введите, пожалуйста, пароль ещё раз."
+
+msgid "The username is required. 150 characters or fewer. Letters, digits and @/./+/-/_ only"
+msgstr "Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_."
+
+msgid "A user with that username already exists"
+msgstr "Пользователь с таким именем уже существует."
+
+msgid "The entered passwords do not match."
+msgstr "Введенные пароли не совпадают."
+
+msgid "The 'first_name' is required"
+msgstr "Поле 'Имя' обязательно к заполнению"
+
+msgid "Create a user"
+msgstr "Регистрация"
+
+msgid "Register"
+msgstr "Зарегистрировать"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Delete a user"
+msgstr "Удаление пользователя"
+
+msgid "Are you sure you want to delete"
+msgstr "Вы уверены, что хотите удалить"
+
+msgid "A status with this name already exists."
+msgstr "Статус с таким именем уже существует."
+
+msgid "Status created successfully."
+msgstr "Статус успешно создан"
+
+msgid "Status updated successfully."
+msgstr "Статус успешно изменен"
+
+msgid "Status deleted successfully"
+msgstr "Статус успешно удален"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Create date"
+msgstr "Дата создания"
+
+msgid "Delete status"
+msgstr "Удаление статуса"
+
+msgid "Update status"
+msgstr "Изменение статуса"
+
+msgid "Fullname"
+msgstr "Полное имя"
+
+msgid "Creation date"
+msgstr "Дата создания"
+
+msgid "A label with this name already exists."
+msgstr "Метка с таким именем уже существует"
+
+msgid "Can't delete label because it's in use"
+msgstr "Невозможно удалить метку, потому что она используется"
+
+msgid "Label deleted successfully."
+msgstr "Метка успешно удалена"
+
+msgid "Label updated successfully."
+msgstr "Метка успешно изменена"
+
+msgid "Label created successfully."
+msgstr "Метка успешно создана"
+
+msgid "Delete label"
+msgstr "Удаление метки"
+
+msgid "Only own tasks"
+msgstr "Только свои задачи"
+
+msgid "Label"
+msgstr "Метка"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Author"
+msgstr "Автор"
+
+msgid "Executor"
+msgstr "Исполнитель"
+
+msgid "Delete task"
+msgstr "Удаление задачи"
+
+msgid "View task"
+msgstr "Просмотр задачи"
+
+msgid "Show"
+msgstr "Показать"
+
+msgid "< to tasks"
+msgstr "< к задачам"
+
+# FLASH MESSAGES
+
+msgid "You do not have permissions to change another user."
+msgstr "У вас нет прав для изменения другого пользователя."
+
+msgid "Can't delete user because it's in use"
+msgstr "Невозможно удалить пользователя, потому что он используется"
+
+msgid "User updated successfully."
+msgstr "Пользователь успешно изменен"
+
+msgid "You are not authorized! Please sign in."
+msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
+
+msgid "You are signed in"
+msgstr "Вы залогинены"
+
+msgid "Please enter correct username or password"
+msgstr "Пожалуйста, введите правильные имя пользователя и пароль. Оба поля могут быть чувствительны к регистру."
+
+msgid "You are sign out"
+msgstr "Вы разлогинены"
+
+msgid "User deleted successfully"
+msgstr "Пользователь успешно удален"
+
+msgid "Task created successfully."
+msgstr "Задача успешно создана"
+
+msgid "Task updated successfully."
+msgstr "Задача успешно изменена"
+
+msgid "A task with this name already exists."
+msgstr "Задача с таким именеем уже существует"

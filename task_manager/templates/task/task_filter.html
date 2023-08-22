@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load bootstrap4 %}
 
 <div class="card mb-3">
@@ -6,7 +7,7 @@
         {% for field in filter.form %}
             {% bootstrap_field field bound_css_class='' %}
         {% endfor %}
-        <input type="submit" class="btn btn-primary" value="Show">
+        <input type="submit" class="btn btn-primary" value={% translate "Show" %}>
     </form>
   </div>
 </div>

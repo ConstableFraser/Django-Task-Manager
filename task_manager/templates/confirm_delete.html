@@ -10,11 +10,11 @@
 {% block content %}
        <form class="form" method="post">
           {% csrf_token %}
-          <div class="alert alert-warning" role="alert">Are you sure you want to delete?
-          <span class="border border-danger rounded"><b>{{ object| upper }}</b></span></div>
+          <div class="alert alert-warning" role="alert">{% translate "Are you sure you want to delete" %}
+          <span class="border border-danger rounded"><b>{{ object| upper }}</b></span> ?</div>
           <p></p>
           <p></p>
-          <input type="submit" class="btn btn-danger" value="Delete">
-          <a href={{ back_referer }} id="cancel" name="cancel" class="btn btn-default btn-link"><u>Cancel</u></a>
+          <input type="submit" class="btn btn-danger" value={% translate "Yes, delete" %}>
+          <a href={{ back_referer }} id="cancel" name={% translate "cancel" %} class="btn btn-default btn-link"><u>{% translate "Cancel" %}</u></a>
        </form>
 {% endblock %}

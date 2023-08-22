@@ -7,9 +7,9 @@
            <thead class="thead-light">
               <tr>
                 <th>ID</th>
-                <th>Имя пользователя</th>
-                <th>Полное имя</th>
-                <th>Дата создания</th>
+                <th>{% translate "Username" %}</th>
+                <th>{% translate "Fullname" %}</th>
+                <th>{% translate "Creation date" %}</th>
                 <th></th>
               </tr>
             </thead>
@@ -18,13 +18,13 @@
        {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
+                <td><a href="{% url 'user_card' pk=user.id %}">{{ user.username }}</a></td>
                 <td>{{ user.first_name }} {{ user.last_name }}</td>
                 <td>{{ user.date_joined|date:"d.m.Y H:m" }}</td>
                 <td>
-                    <a href="/users/{{ user.id }}/update/">Изменить</a>
+                    <a href="{% url 'user_update' pk=user.id %}">{% translate "Update" %}</a>
                     <br>
-                    <a href="/users/{{ user.id }}/delete/">Удалить</a>
+                    <a href="{% url 'user_delete' pk=user.id %}">{% translate "Delete" %}</a>
                 </td>
             </tr>
        {% endfor %}

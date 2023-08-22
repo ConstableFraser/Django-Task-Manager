@@ -1,11 +1,11 @@
 from django import forms
-from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from .models import Task
 from .models import User
 from .models import Status
 from ..util import set_status
-from ..strings import TASK_EXIST_STR
+from ..strings import TASK_EXIST_STR, TASK_HELP_STR
 
 
 class TaskForm(forms.ModelForm):
@@ -26,17 +26,21 @@ class TaskForm(forms.ModelForm):
         super(TaskForm, self).__init__(*args, **kwargs)
         self.fields['name'].autofocus = True
         self.fields['name'].required = True
+        self.fields['name'].label = _('Name')
         self.fields['status'].required = True
+        self.fields['status'].label = _('Status')
         self.fields['executor'].required = False
+        self.fields['executor'].label = _('Executor')
         self.fields['labels'].required = False
-        self.fields['labels'].help_text = "hold down the 'Ctrl' key \
-                                           for multiple selection"
+        self.fields['labels'].help_text = _(TASK_HELP_STR)
+        self.fields['labels'].label = _('Labels')
+        self.fields['description'].label = _('Description')
 
     def clean(self):
         cleaned_data = super(TaskForm, self).clean()
         name = cleaned_data.get("name")
         if Task.objects.filter(name=name).exclude(id=self.instance.id):
             set_status(self.fields['name'], 'invalid')
-            raise forms.ValidationError(TASK_EXIST_STR)
+            raise forms.ValidationError(_(TASK_EXIST_STR))
 
         return cleaned_data

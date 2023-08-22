@@ -22,9 +22,9 @@
                 <p>{{ user.id }}</p>
                 <hr>
                 <div>
-                    <a href="/users/{{ user.id }}/update/">{% translate "Update" %}</a>
+                    <a href="{% url 'user_update' pk=user.id %}">{% translate "Update" %}</a>
                     <br>
-                    <a href="/users/{{ user.id }}/delete/">{% translate "Delete" %}</a>
+                    <a href="{% url 'user_delete' pk=user.id %}">{% translate "Delete" %}</a>
                 </div>
             </div>
 {% endblock %}

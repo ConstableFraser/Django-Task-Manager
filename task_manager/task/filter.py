@@ -1,29 +1,40 @@
 import django_filters
 from django import forms
-from django_filters.widgets import BooleanWidget
+from django.utils.translation import gettext_lazy as _
+from django_filters import (BooleanFilter, ModelChoiceFilter)
 
 from .models import Task
 from ..label.models import Label
+from ..user.models import User
+from ..status.models import Status
+
 
 class TasksFilter(django_filters.FilterSet):
-    self_tasks = django_filters.BooleanFilter(
-        field_name = 'author',
-        label = 'Only own tasks',
-        widget = forms.CheckboxInput(),
-        method = 'filter_self_tasks'
-        )
+    self_tasks = BooleanFilter(field_name='author',
+                               widget=forms.CheckboxInput(),
+                               method='filter_self_tasks',
+                               label=_('Only own tasks')
+                               )
 
-    label = django_filters.ModelChoiceFilter(
-        field_name = 'labels',
-        label = 'Label',
-        queryset = Label.objects.all().order_by('-name')
-        )
+    labels = Label.objects.all().order_by('name')
+    label = ModelChoiceFilter(field_name='labels',
+                              queryset=labels,
+                              label=_('Labels'))
+
+    users = User.objects.all().order_by('first_name')
+    executor = ModelChoiceFilter(field_name='executor',
+                                 queryset=users,
+                                 label=_('Executor'))
+
+    statuses = Status.objects.all().order_by('name')
+    status = ModelChoiceFilter(field_name='status',
+                               queryset=statuses,
+                               label=_('Status'))
 
     def filter_self_tasks(self, queryset, name, value):
         if value:
             return queryset.filter(author=self.request.user).order_by('-id')
         return queryset.order_by('-id')
-
 
     class Meta:
         model = Task

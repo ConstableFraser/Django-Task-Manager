@@ -4,16 +4,19 @@ from ..status.models import Status
 from ..user.models import User
 from ..label.models import Label
 
+
 class Task(models.Model):
     name = models.CharField(max_length=150,
                             null=False,
                             blank=False,
-                            unique=True)
+                            unique=True
+                            )
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.ForeignKey(Status,
                                on_delete=models.PROTECT,
-                               null=False)
+                               null=False
+                               )
     author = models.ForeignKey(User,
                                on_delete=models.PROTECT,
                                null=False,
@@ -25,6 +28,7 @@ class Task(models.Model):
     labels = models.ManyToManyField(Label,
                                     through='TaskToLabel',
                                     through_fields=('task', 'label'))
+
     class Meta:
         ordering = ['-id']
 

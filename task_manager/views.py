@@ -2,11 +2,15 @@ from django.views import View
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate, login, logout
+from .strings import (USER_SIGNIN,
+                      USER_ERROR_PWD_USRNM,
+                      USER_SIGNOUT,
+                      )
 
 
 class UserSignIn(View):
-
     def get(self, request, *args, **kwargs):
         return render(request, 'user/user_signin.html')
 
@@ -17,14 +21,14 @@ class UserSignIn(View):
 
         if user is not None:
             login(request, user)
-            messages.success(request, 'You are signed in')
+            messages.success(request, _(USER_SIGNIN))
             return HttpResponseRedirect("/")
         else:
-            messages.error(request, 'Please enter correct username or password')
+            messages.error(request, _(USER_ERROR_PWD_USRNM))
             return render(request, 'user/user_signin.html')
 
 
 def logout_view(request):
     logout(request)
-    messages.info(request, 'You are sign out')
+    messages.info(request, _(USER_SIGNOUT))
     return redirect('/')

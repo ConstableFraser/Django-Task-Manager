@@ -7,14 +7,14 @@
        <form method="post">
           {% csrf_token %}
           <div class="mb-2">
-            <label class="form-label" for="id_username">Username</label>
-            <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" class="form-control" placeholder="Username" required id="id_username">
+            <label class="form-label" for="id_username">{% translate "Username" %}</label>
+            <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" class="form-control" placeholder={% translate "Username" %} required id="id_username">
           </div>
           <div class="mb-4">
-            <label class="form-label" for="id_password">Password</label>
-            <input type="password" name="password" autocomplete="current-password" class="form-control" placeholder="Password" required id="id_password">
+            <label class="form-label" for="id_password">{% translate "Password" %}</label>
+            <input type="password" name="password" autocomplete="current-password" class="form-control" placeholder={% translate "Password" %} required id="id_password">
           </div>
-          <input class="btn btn-primary" type="submit" value="Sign in">
-          <a href="/" id="cancel" name="cancel" class="btn btn-default btn-link"><u>Cancel</u></a>
+          <input class="btn btn-primary" type="submit" value={% translate "Sign in" %}>
+          <a href="{% url 'home' %}" id="cancel" name={% translate "cancel" %} class="btn btn-default btn-link"><u>{% translate "Cancel" %}</u></a>
        </form>
 {% endblock %}

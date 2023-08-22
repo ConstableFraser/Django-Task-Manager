@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-        <div><a href="/tasks/">{% translate "< to tasks" %}</a></div>
+        <div><a href="{% url 'tasks' %}">{% translate "< to tasks" %}</a></div>
         <div class="card bg-light mb-3" style="max-width: 70rem;">
         <div class="card-header"><h3>{{ task.name }}</h3></div>
 
@@ -18,7 +18,7 @@
                 <div><mark>{% translate "Author" %}</mark></div>
                 <p>{{ task.author }}</p>
                 <div><mark>{% translate "Executor" %}</mark></div>
-                <p>{{ task.executor }}</p>
+                <p>{{ task.executor|default_if_none:"" }}</p>
                 <div><mark>{% translate "Status" %}</mark></div>
                 <p>{{ task.status }}</p>
                 <div><mark>{% translate "Labels" %}</mark></div>
@@ -29,9 +29,9 @@
                     </ul>
                 <hr>
                 <div>
-                    <a href="/tasks/{{ task.id }}/update/">{% translate "Update" %}</a>
+                    <a href="{% url 'task_update' pk=task.id %}">{% translate "Update" %}</a>
                     <br>
-                    <a href="/tasks/{{ task.id }}/delete/">{% translate "Delete" %}</a>
+                    <a href="{% url 'task_delete' pk=task.id %}">{% translate "Delete" %}</a>
                 </div>
             </div>
 {% endblock %}

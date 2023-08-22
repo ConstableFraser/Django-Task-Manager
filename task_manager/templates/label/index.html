@@ -8,18 +8,17 @@
 
 {% block content %}
         <div>
-            <a href="/labels/create/">{% trans "Create label" %}</a>
+            <a href="{% url 'label_create' %}">{% trans "Create label" %}</a>
         </div>
        <table class="table table-striped table-hover">
            <thead class="thead-light">
               <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Create date</th>
+                <th>{% translate "Name" %}</th>
+                <th>{% translate "Creation date" %}</th>
                 <th></th>
               </tr>
             </thead>
-
         <tbody>
        {% for label in labels %}
             <tr>
@@ -27,9 +26,9 @@
                 <td>{{ label.name }}</td>
                 <td>{{ label.created_at|date:"d.m.Y H:m" }}
                 <td>
-                    <a href="/labels/{{ label.id }}/update/">Изменить</a>
+                    <a href="{% url 'label_update' pk=label.id %}">{% translate "Update" %}</a>
                     <br>
-                    <a href="/labels/{{ label.id }}/delete/">Удалить</a>
+                    <a href="{% url 'label_delete' pk=label.id %}">{% translate "Delete" %}</a>
                 </td>
             </tr>
        {% endfor %}

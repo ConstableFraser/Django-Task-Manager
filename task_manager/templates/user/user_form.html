@@ -12,6 +12,6 @@
           {% csrf_token %}
           {% bootstrap_form form %}
           <input type="submit" class="btn btn-primary" value={{ commit_name }}>
-          <a href="/" id="cancel" name="cancel" class="btn btn-default btn-link"><u>Cancel</u></a>
+          <a href={{ back_referer }} id="cancel" name={% translate "cancel" %} class="btn btn-default btn-link"><u>{% translate "Cancel" %}</u></a>
        </form>
 {% endblock %}

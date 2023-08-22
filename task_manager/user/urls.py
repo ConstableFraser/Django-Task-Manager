@@ -18,5 +18,8 @@ urlpatterns = [
     path('<int:pk>/',
          views.UserDetailView.as_view(),
          name='user_card'),
+    path('<int:pk>',
+         views.UserDetailView.as_view(),
+         name='user_card'),
     re_path(r'.*', TemplateView.as_view(template_name='404.html'), name='404'),
 ]

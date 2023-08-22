@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from .models import Status
 from ..util import set_status
@@ -20,6 +21,6 @@ class StatusForm(forms.ModelForm):
         name = cleaned_data.get("name")
         if Status.objects.filter(name=name).exclude(id=self.instance.id):
             set_status(self.fields['name'], 'invalid')
-            raise forms.ValidationError(STATUS_EXIST_STR)
+            raise forms.ValidationError(_(STATUS_EXIST_STR))
 
         return cleaned_data

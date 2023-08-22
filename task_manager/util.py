@@ -1,4 +1,9 @@
 
+def messages_check(self, url):
+    response = self.client.get(url)
+    messages = list(response.context['messages'])
+    return len(messages), messages[0]
+
 
 def set_status(field, status):
     class_style = {'valid': ' is-valid',

@@ -3,7 +3,7 @@ from django.test import TestCase
 from task_manager.user.models import User
 
 
-class UserTestModelCase(TestCase):
+class UserModelTestCase(TestCase):
     fixtures = ['User_users.json']
 
 
