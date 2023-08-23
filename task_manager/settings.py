@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-import rollbar
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
@@ -145,7 +144,9 @@ LANGUAGES = [
     ("en", gettext_lazy("English")),
     ("ru", gettext_lazy("Russian")),
 ]
-LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale'),]
+
+LOCALE_URL = "locale/"
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale/'),]
 
 # ACCESS TOKEN OF ROLLBAR
 # ROLLBAR_TOKEN = os.getenv('ROLLBAR_TOKEN')
@@ -156,8 +157,6 @@ ROLLBAR = {
     'code_version': '1.0',
     'root': BASE_DIR,
 }
-
-rollbar.init(**ROLLBAR)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
