@@ -30,7 +30,7 @@ class TaskListView(LoginRequiredMixin, FilterView):
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -48,7 +48,7 @@ class TaskCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
     def handle_no_permission(self):
         messages.success(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -72,7 +72,7 @@ class TaskUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def handle_no_permission(self):
         messages.success(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -91,7 +91,7 @@ class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -116,7 +116,7 @@ class TaskReadView(LoginRequiredMixin, DetailView):
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -29,7 +29,7 @@ class UserDetailView(LoginRequiredMixin, SuccessMessageMixin, DetailView):
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
 
 class UsersListView(View):
@@ -49,7 +49,7 @@ class UserCreateView(CreateView):
     model = User
     form_class = UserForm
     template_name = 'user/user_form.html'
-    success_url = reverse_lazy('signin')
+    success_url = reverse_lazy('login')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -69,7 +69,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -92,11 +92,11 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     permission_denied_message = _(NEED_TO_SIGNIN_STR)
     success_message = _(USER_HAS_BEEN_DELETE)
-    success_url = reverse_lazy('signin')
+    success_url = reverse_lazy('login')
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def get(self, request, *args, **kwargs):
         if self.request.user != self.get_object():

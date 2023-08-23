@@ -26,7 +26,7 @@ class StatusListView(LoginRequiredMixin, View):
 
     def handle_no_permission(self):
         messages.success(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def get(self, request, *args, **kwargs):
         statuses = Status.objects.only('id', 'name',
@@ -47,7 +47,7 @@ class StatusCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
     def handle_no_permission(self):
         messages.success(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -67,7 +67,7 @@ class StatusUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -86,7 +86,7 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
 
     def handle_no_permission(self):
         messages.success(self.request, self.permission_denied_message)
-        return redirect(reverse('signin'), code=302)
+        return redirect(reverse('login'), code=302)
 
     def post(self, request, *args, **kwargs):
         tasks = Task.objects.filter(status=self.get_object())
