@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-23 01:48+0000\n"
+"POT-Creation-Date: 2023-08-23 02:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -213,9 +213,7 @@ msgid "Sign out"
 msgstr "Выход"
 
 #: task_manager/templates/nav.html:33
-#: task_manager/templates/user/user_signin.html:5
-#: task_manager/templates/user/user_signin.html:17
-msgid "Sign in"
+msgid "Login"
 msgstr "Вход"
 
 #: task_manager/templates/nav.html:36
@@ -258,6 +256,11 @@ msgstr "Фамилия"
 msgid "ID"
 msgstr ""
 
+#: task_manager/templates/user/user_signin.html:5
+#: task_manager/templates/user/user_signin.html:17
+msgid "Sign in"
+msgstr "Войти"
+
 #: task_manager/templates/user/user_signin.html:14
 #: task_manager/templates/user/user_signin.html:15
 msgid "Password"
@@ -283,105 +286,105 @@ msgstr "Изменение пользователя"
 msgid "Delete a user"
 msgstr "Удаление пользователя"
 
-#~ msgid "A task can only be deleted by its author"
-#~ msgstr "Задачу может удалить только ее автор"
+msgid "A task can only be deleted by its author"
+msgstr "Задачу может удалить только ее автор"
 
-#~ msgid "Can't delete status because it's in use"
-#~ msgstr "Невозможно удалить статус, потому что он используется"
+msgid "Can't delete status because it's in use"
+msgstr "Невозможно удалить статус, потому что он используется"
 
-#~ msgid "Task deleted successfully"
-#~ msgstr "Задача успешо удалена"
+msgid "Task deleted successfully"
+msgstr "Задача успешо удалена"
 
-#~ msgid "hold down the 'Ctrl' key for multiple selection"
-#~ msgstr "удерживайте 'Ctrl' для множественного выбора"
+msgid "hold down the 'Ctrl' key for multiple selection"
+msgstr "удерживайте 'Ctrl' для множественного выбора"
 
-#~ msgid "Your password must contain at least 3 characters."
-#~ msgstr "Ваш пароль должен содержать как минимум 3 символа."
+msgid "Your password must contain at least 3 characters."
+msgstr "Ваш пароль должен содержать как минимум 3 символа."
 
-#~ msgid "To confirm, please enter your password again."
-#~ msgstr "Для подтверждения введите, пожалуйста, пароль ещё раз."
+msgid "To confirm, please enter your password again."
+msgstr "Для подтверждения введите, пожалуйста, пароль ещё раз."
 
-#~ msgid ""
-#~ "The username is required. 150 characters or fewer. Letters, digits and "
-#~ "@/./+/-/_ only"
-#~ msgstr ""
-#~ "Обязательное поле. Не более 150 символов. Только буквы, цифры и символы "
-#~ "@/./+/-/_."
+msgid ""
+"The username is required. 150 characters or fewer. Letters, digits and "
+"@/./+/-/_ only"
+msgstr ""
+"Обязательное поле. Не более 150 символов. Только буквы, цифры и символы "
+"@/./+/-/_."
 
-#~ msgid "A user with that username already exists"
-#~ msgstr "Пользователь с таким именем уже существует."
+msgid "A user with that username already exists"
+msgstr "Пользователь с таким именем уже существует."
 
-#~ msgid "The entered passwords do not match."
-#~ msgstr "Введенные пароли не совпадают."
+msgid "The entered passwords do not match."
+msgstr "Введенные пароли не совпадают."
 
-#~ msgid "The 'first_name' is required"
-#~ msgstr "Поле 'Имя' обязательно к заполнению"
+msgid "The 'first_name' is required"
+msgstr "Поле 'Имя' обязательно к заполнению"
 
-#~ msgid "A status with this name already exists."
-#~ msgstr "Статус с таким именем уже существует."
+msgid "A status with this name already exists."
+msgstr "Статус с таким именем уже существует."
 
-#~ msgid "Status created successfully."
-#~ msgstr "Статус успешно создан"
+msgid "Status created successfully."
+msgstr "Статус успешно создан"
 
-#~ msgid "Status updated successfully."
-#~ msgstr "Статус успешно изменен"
+msgid "Status updated successfully."
+msgstr "Статус успешно изменен"
 
-#~ msgid "Status deleted successfully"
-#~ msgstr "Статус успешно удален"
+msgid "Status deleted successfully"
+msgstr "Статус успешно удален"
 
-#~ msgid "Create date"
-#~ msgstr "Дата создания"
+msgid "Create date"
+msgstr "Дата создания"
 
-#~ msgid "A label with this name already exists."
-#~ msgstr "Метка с таким именем уже существует"
+msgid "A label with this name already exists."
+msgstr "Метка с таким именем уже существует"
 
-#~ msgid "Can't delete label because it's in use"
-#~ msgstr "Невозможно удалить метку, потому что она используется"
+msgid "Can't delete label because it's in use"
+msgstr "Невозможно удалить метку, потому что она используется"
 
-#~ msgid "Label deleted successfully."
-#~ msgstr "Метка успешно удалена"
+msgid "Label deleted successfully."
+msgstr "Метка успешно удалена"
 
-#~ msgid "Label updated successfully."
-#~ msgstr "Метка успешно изменена"
+msgid "Label updated successfully."
+msgstr "Метка успешно изменена"
 
-#~ msgid "Label created successfully."
-#~ msgstr "Метка успешно создана"
+msgid "Label created successfully."
+msgstr "Метка успешно создана"
 
-#~ msgid "Label"
-#~ msgstr "Метка"
+msgid "Label"
+msgstr "Метка"
 
 # FLASH MESSAGES
-#~ msgid "You do not have permissions to change another user."
-#~ msgstr "У вас нет прав для изменения другого пользователя."
+msgid "You do not have permissions to change another user."
+msgstr "У вас нет прав для изменения другого пользователя."
 
-#~ msgid "Can't delete user because it's in use"
-#~ msgstr "Невозможно удалить пользователя, потому что он используется"
+msgid "Can't delete user because it's in use"
+msgstr "Невозможно удалить пользователя, потому что он используется"
 
-#~ msgid "User updated successfully."
-#~ msgstr "Пользователь успешно изменен"
+msgid "User updated successfully."
+msgstr "Пользователь успешно изменен"
 
-#~ msgid "You are not authorized! Please sign in."
-#~ msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
+msgid "You are not authorized! Please sign in."
+msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 
-#~ msgid "You are signed in"
-#~ msgstr "Вы залогинены"
+msgid "You are signed in"
+msgstr "Вы залогинены"
 
-#~ msgid "Please enter correct username or password"
-#~ msgstr ""
-#~ "Пожалуйста, введите правильные имя пользователя и пароль. Оба поля могут "
-#~ "быть чувствительны к регистру."
+msgid "Please enter correct username or password"
+msgstr ""
+"Пожалуйста, введите правильные имя пользователя и пароль. Оба поля могут "
+"быть чувствительны к регистру."
 
-#~ msgid "You are sign out"
-#~ msgstr "Вы разлогинены"
+msgid "You are sign out"
+msgstr "Вы разлогинены"
 
-#~ msgid "User deleted successfully"
-#~ msgstr "Пользователь успешно удален"
+msgid "User deleted successfully"
+msgstr "Пользователь успешно удален"
 
-#~ msgid "Task created successfully."
-#~ msgstr "Задача успешно создана"
+msgid "Task created successfully."
+msgstr "Задача успешно создана"
 
-#~ msgid "Task updated successfully."
-#~ msgstr "Задача успешно изменена"
+msgid "Task updated successfully."
+msgstr "Задача успешно изменена"
 
-#~ msgid "A task with this name already exists."
-#~ msgstr "Задача с таким именеем уже существует"
+msgid "A task with this name already exists."
+msgstr "Задача с таким именеем уже существует"

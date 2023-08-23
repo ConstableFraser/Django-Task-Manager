@@ -1,4 +1,3 @@
-import os
 from django.views import View
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -22,11 +21,7 @@ class UserSignIn(View):
 
         if user is not None:
             login(request, user)
-            from pathlib import Path
-            BASE_DIR = Path(__file__).resolve().parent.parent
-            dirs = os.listdir(BASE_DIR)
-            # messages.success(request, _(USER_SIGNIN))
-            messages.success(request, str(dirs))
+            messages.success(request, _(USER_SIGNIN))
             return HttpResponseRedirect("/")
         else:
             messages.error(request, _(USER_ERROR_PWD_USRNM))
