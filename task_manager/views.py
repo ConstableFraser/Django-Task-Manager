@@ -22,7 +22,7 @@ class UserSignIn(View):
         if user is not None:
             login(request, user)
             # messages.success(request, _(USER_SIGNIN))
-              messages.success(request, str(request.LANGUAGE_CODE))
+            messages.success(request, str(request.LANGUAGE_CODE))
             return HttpResponseRedirect("/")
         else:
             messages.error(request, _(USER_ERROR_PWD_USRNM))
