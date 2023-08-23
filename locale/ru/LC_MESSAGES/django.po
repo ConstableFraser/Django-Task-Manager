@@ -96,7 +96,7 @@ msgid "Yes, delete"
 msgstr "Да, удалить"
 
 msgid "Delete"
-msgstr "Удалить"
+msgstr "УдалИть"
 
 msgid "Update label"
 msgstr "Изменить метку"
