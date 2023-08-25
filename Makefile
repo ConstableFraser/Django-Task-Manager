@@ -21,3 +21,5 @@ test-coverage:
 	poetry run coverage run manage.py test ./task_manager/label/tests
 	poetry run coverage run manage.py test ./task_manager/status/tests
 	poetry run coverage run manage.py test ./task_manager/task/tests
+	poetry run coverage report -m --include=task_manager/* --omit=task_manager/settings.py
+	poetry run coverage xml --include=task_manager/* --omit=task_manager/settings.py
