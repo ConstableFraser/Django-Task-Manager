@@ -19,7 +19,7 @@ class TasksFilter(django_filters.FilterSet):
     labels = Label.objects.all().order_by('name')
     label = ModelChoiceFilter(field_name='labels',
                               queryset=labels,
-                              label=_('Labels'))
+                              label=_('Label'))
 
     users = User.objects.all().order_by('first_name')
     executor = ModelChoiceFilter(field_name='executor',
