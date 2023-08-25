@@ -4,29 +4,11 @@ on: push
 
 env:
   SECRET_KEY: ${{ secrets.SECRET_KEY }}
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
   CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      # Label used to access the service container
-      postgres:
-        # Docker Hub image
-        image: postgres:latest
-        # Provide the password for postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          # Maps tcp port 5432 on service container to the host
-          - 5432:5432
     steps:
     - uses: actions/checkout@v2
 
