@@ -13,10 +13,10 @@ class TaskViewTestCase(TestCase):
     def setUp(self):
         self.stts = Status.objects.create(name='Status#1')
         self.athr = User.objects.create(first_name='Freddy',
-                                          last_name='Mercury',
-                                          username='Fred',
-                                          password='supersecret#01'
-                                          )
+                                        last_name='Mercury',
+                                        username='Fred',
+                                        password='supersecret#01'
+                                        )
         self.tsk = Task.objects.create(name='task#1',
                                        status=self.stts,
                                        author=self.athr

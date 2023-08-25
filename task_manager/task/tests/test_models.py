@@ -46,7 +46,6 @@ class TaskTestModelCase(TestCase):
         self.assertEqual(Task.objects.filter(id=2).count(), 0)
         self.assertEqual(Task.objects.filter(id=3).count(), 0)
 
-
     def test_filter_task(self):
         qs = Task.objects.all()
         f = TasksFilter(data={'status': '',
