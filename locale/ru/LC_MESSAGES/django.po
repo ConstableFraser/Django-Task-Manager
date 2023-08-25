@@ -292,9 +292,6 @@ msgstr "Задачу может удалить только ее автор"
 msgid "Can't delete status because it's in use"
 msgstr "Невозможно удалить статус, потому что он используется"
 
-msgid "Task deleted successfully"
-msgstr "Задача успешо удалена"
-
 msgid "hold down the 'Ctrl' key for multiple selection"
 msgstr "удерживайте 'Ctrl' для множественного выбора"
 
@@ -388,6 +385,9 @@ msgstr "Задача успешно создана"
 
 msgid "Task updated successfully."
 msgstr "Задача успешно изменена"
+
+msgid "Task deleted successfully"
+msgstr "Задача успешно удалена"
 
 msgid "A task with this name already exists."
 msgstr "Задача с таким именеем уже существует"
