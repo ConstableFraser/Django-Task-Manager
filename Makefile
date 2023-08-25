@@ -15,3 +15,6 @@ test:
 
 lint:
 	poetry run flake8 task_manager
+
+test-coverage-xml:
+	poetry run pytest --cov=gendiff --cov-report xml
