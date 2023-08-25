@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from ..forms import UserForm
-from ..models import User
+from task_manager.user.forms import UserForm
+from task_manager.user.models import User
 
 
 class UserFormTestCase(TestCase):

@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from ..forms import StatusForm
-from ..models import Status
+from task_manager.status.forms import StatusForm
+from task_manager.status.models import Status
 
 
 class StatusFormTestCase(TestCase):

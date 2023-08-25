@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from ..forms import LabelForm
-from ..models import Label
+from task_manager.label.forms import LabelForm
+from task_manager.label.models import Label
 
 
 class LabelFormTestCase(TestCase):

@@ -1,9 +1,9 @@
 from django.test import TestCase
 
-from ..forms import TaskForm
-from ..models import Task
-from ...status.models import Status
-from ...user.models import User
+from task_manager.task.forms import TaskForm
+from task_manager.task.models import Task
+from task_manager.status.models import Status
+from task_manager.user.models import User
 
 
 class TaskFormTestCase(TestCase):

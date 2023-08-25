@@ -2,9 +2,9 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from ..models import User
-from ...strings import NEED_TO_SIGNIN_STR
-from ...util import messages_check
+from task_manager.user.models import User
+from task_manager.strings import NEED_TO_SIGNIN_STR
+from task_manager.util import messages_check
 
 
 class UserViewTestCase(TestCase):

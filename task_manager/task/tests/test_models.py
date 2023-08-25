@@ -38,6 +38,15 @@ class TaskTestModelCase(TestCase):
         Task1_new = Task.objects.get(name="What's happened")
         self.assertEqual(Task1_new.id, Task1.id)
 
+    def test_delete_task(self):
+        Task2 = Task.objects.get(id=2)
+        Task3 = Task.objects.get(id=3)
+        Task2.delete()
+        Task3.delete()
+        self.assertEqual(Task.objects.filter(id=2).count(), 0)
+        self.assertEqual(Task.objects.filter(id=3).count(), 0)
+
+
     def test_filter_task(self):
         qs = Task.objects.all()
         f = TasksFilter(data={'status': '',
@@ -58,11 +67,3 @@ class TaskTestModelCase(TestCase):
                               'labels': ''},
                         queryset=qs)
         self.assertEqual(f.qs.count(), 1)
-
-    def test_delete_task(self):
-        Task2 = Task.objects.get(id=2)
-        Task3 = Task.objects.get(id=3)
-        Task2.delete()
-        Task3.delete()
-        self.assertEqual(Task.objects.filter(id=2).count(), 0)
-        self.assertEqual(Task.objects.filter(id=3).count(), 0)

@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.db import IntegrityError
 from django.db.models.deletion import ProtectedError
 
-from ..models import Status
+from task_manager.status.models import Status
 
 
 class StatusTestModelCase(TestCase):

@@ -2,10 +2,10 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from ..models import Status
-from ...user.models import User
-from ...strings import NEED_TO_SIGNIN_STR, STATUS_EXIST_STR
-from ...util import messages_check
+from task_manager.status.models import Status
+from task_manager.user.models import User
+from task_manager.strings import NEED_TO_SIGNIN_STR, STATUS_EXIST_STR
+from task_manager.util import messages_check
 
 
 class StatusViewTestCase(TestCase):
