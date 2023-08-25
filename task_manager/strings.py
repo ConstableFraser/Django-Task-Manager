@@ -20,6 +20,7 @@ USER_WAS_UPDATED = "User updated successfully."
 USER_HVNT_PRMSSNS = "You do not have permissions to change another user."
 USER_CANT_DELETE = "Can't delete user because it's in use"
 USER_HAS_BEEN_DELETE = "User deleted successfully"
+USER_WAS_CREATED = "User successfully registered"
 
 # STATUS STRINGS
 # ~~~~~~~~~~~~

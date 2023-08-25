@@ -363,6 +363,9 @@ msgstr "Невозможно удалить пользователя, потом
 msgid "User updated successfully."
 msgstr "Пользователь успешно изменен"
 
+msgid "User successfully registered"
+msgstr "Пользователь успешно зарегистрирован"
+
 msgid "You are not authorized! Please sign in."
 msgstr "Вы не авторизованы! Пожалуйста, выполните вход."
 

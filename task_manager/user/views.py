@@ -18,6 +18,7 @@ from ..strings import (NEED_TO_SIGNIN_STR,
                        USER_HVNT_PRMSSNS,
                        USER_CANT_DELETE,
                        USER_HAS_BEEN_DELETE,
+                       USER_WAS_CREATED,
                        )
 
 
@@ -45,11 +46,12 @@ class UsersListView(View):
                       )
 
 
-class UserCreateView(CreateView):
+class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
     form_class = UserForm
     template_name = 'user/user_form.html'
     success_url = reverse_lazy('login')
+    success_message = _(USER_WAS_CREATED)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
