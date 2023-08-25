@@ -30,5 +30,5 @@ jobs:
     - name: Publish code coverage report
       uses: paambaati/codeclimate-action@v3.0.0
       with:
-        coverageCommand: make test-coverage-xml
+        coverageCommand: make test-coverage
         debug: true
