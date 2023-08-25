@@ -264,7 +264,7 @@ msgstr "Войти"
 #: task_manager/templates/user/user_signin.html:14
 #: task_manager/templates/user/user_signin.html:15
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 #: task_manager/user/forms.py:18
 msgid "Confirm password"

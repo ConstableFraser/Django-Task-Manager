@@ -11,22 +11,26 @@ from ..strings import (USERNAME_REQUIRED,
                        FIRST_NAME_REQUIRED,
                        USER_ALREADY_EXIST,
                        PASSWORD_INFO_STR,
+                       PWD_TOOLTIP,
                        )
 
 
 class UserForm(forms.ModelForm):
+    password1 = forms.CharField(label=_("Password"),
+                                widget=forms.PasswordInput(),
+                                help_text=_(PWD_TOOLTIP))
     password2 = forms.CharField(label=_("Confirm password"),
                                 widget=forms.PasswordInput(),
                                 help_text=_(CONFIRM_PWD))
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'password']
+        fields = ['first_name', 'last_name', 'username', 'password1', 'password2']
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
-        self.fields['password'].widget = forms.PasswordInput()
-        self.fields['password'].help_text = _(PASSWORD_INFO_STR)
+        self.fields['password1'].widget = forms.PasswordInput()
+        self.fields['password1'].help_text = _(PASSWORD_INFO_STR)
         self.fields['first_name'].widget.attrs.update({'autofocus': True,
                                                        'required': True
                                                        })
@@ -43,24 +47,24 @@ class UserForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password'])
+        user.set_password(self.cleaned_data['password1'])
         if commit:
             user.save()
         return user
 
     def check_password(self, cleaned_data):
-        password = cleaned_data.get("password")
+        password1 = cleaned_data.get("password1")
         password2 = cleaned_data.get("password2")
 
         try:
-            pwd_validation.validate_password(str(password))
+            pwd_validation.validate_password(str(password1))
         except ValidationError:
             set_status(self.fields['password2'], 'invalid')
-            set_status(self.fields['password'], 'invalid')
+            set_status(self.fields['password1'], 'invalid')
             raise forms.ValidationError(pwd_validation.
                                         password_validators_help_text_html())
 
-        if password != password2:
+        if password1 != password2:
             set_status(self.fields['password2'], 'invalid')
             raise forms.ValidationError(_(PWD_NOT_MATCH))
 

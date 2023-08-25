@@ -156,6 +156,7 @@ ROLLBAR = {
     'environment': 'development' if DEBUG else 'production',
     'code_version': '1.0',
     'root': BASE_DIR,
+    'suppress_reinit_warning': True,
 }
 
 # Static files (CSS, JavaScript, Images)

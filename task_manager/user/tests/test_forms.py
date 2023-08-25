@@ -10,7 +10,7 @@ class UserFormTestCase(TestCase):
         data = {'first_name': 'Jonathan',
                 'last_name': 'Doe',
                 'username': 'JDoe',
-                'password': 'justPassword555',
+                'password1': 'justPassword555',
                 'password2': 'justPassword555'
                 }
         form = UserForm(data=data)
@@ -19,7 +19,7 @@ class UserFormTestCase(TestCase):
     def test_invalid_form_required_first_name(self):
         data = {'last_name': 'Wink',
                 'username': 'usrnm',
-                'password': 'justPassword555',
+                'password1': 'justPassword555',
                 'password2': 'justPassword555'
                 }
         form = UserForm(data=data)
@@ -28,7 +28,7 @@ class UserFormTestCase(TestCase):
     def test_invalid_form_required_password(self):
         data = {'first_name': 'Small',
                 'last_name': 'User',
-                'username': 'smUser',
+                'username1': 'smUser',
                 'password2': 'justPassword555'
                 }
         form = UserForm(data=data)
@@ -38,7 +38,7 @@ class UserFormTestCase(TestCase):
         data = {'first_name': 'Big',
                 'last_name': 'User',
                 'username': 'bigUser',
-                'password': 'justPassword555'
+                'password1': 'justPassword555'
                 }
         form = UserForm(data=data)
         self.assertFalse(form.is_valid())
@@ -58,7 +58,7 @@ class UserFormTestCase(TestCase):
         data = {'first_name': 'Herald',
                 'last_name': 'Rivia',
                 'username': 'Herald777isinvalid$',
-                'password': 'justPassword555',
+                'password1': 'justPassword555',
                 'password2': 'justPassword555'
                 }
         form = UserForm(data=data)
@@ -68,7 +68,7 @@ class UserFormTestCase(TestCase):
         data = {'first_name': 'Herald',
                 'last_name': 'Rivia',
                 'username': 'Herald777',
-                'password': 'justPassword555',
+                'password1': 'justPassword555',
                 'password2': 'invalidpwd2'
                 }
         form = UserForm(data=data)

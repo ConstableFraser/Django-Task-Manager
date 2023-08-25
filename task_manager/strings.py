@@ -4,6 +4,7 @@
 NEED_TO_SIGNIN_STR = "You are not authorized! Please sign in."
 USERNAME_REQUIRED = "The username is required. 150 characters \
                      or fewer. Letters, digits and @/./+/-/_ only"
+PWD_TOOLTIP = "Your password must contain at least 3 characters."
 CONFIRM_PWD = "To confirm, please enter your password again."
 PASSWORD_INFO_STR = "Your password must contain at least 3 characters."
 PWD_NOT_MATCH = "The entered passwords do not match."

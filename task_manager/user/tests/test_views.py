@@ -28,14 +28,14 @@ class UserViewTestCase(TestCase):
         url = reverse('user_update', kwargs={"pk": self.fred.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
-        cnt, msg = messages_check(self, "home")
+        cnt, msg = messages_check(self, reverse("home"))
         self.assertEqual(cnt, 1)
         self.assertEqual(str(msg), _(NEED_TO_SIGNIN_STR))
 
         url = reverse('user_delete', kwargs={"pk": self.fred.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
-        cnt, msg = messages_check(self, "home")
+        cnt, msg = messages_check(self, reverse("home"))
         self.assertEqual(cnt, 1)
         self.assertEqual(str(msg), _(NEED_TO_SIGNIN_STR))
 
