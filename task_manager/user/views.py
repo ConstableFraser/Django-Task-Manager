@@ -94,7 +94,7 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     permission_denied_message = _(NEED_TO_SIGNIN_STR)
     success_message = _(USER_HAS_BEEN_DELETE)
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('users')
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
