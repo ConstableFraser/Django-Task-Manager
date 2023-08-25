@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.core.exceptions import ValidationError
 
 from ..forms import UserForm
 from ..models import User

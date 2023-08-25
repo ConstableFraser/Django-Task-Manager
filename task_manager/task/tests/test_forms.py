@@ -1,12 +1,9 @@
 from django.test import TestCase
-from django import forms
 
 from ..forms import TaskForm
 from ..models import Task
 from ...status.models import Status
 from ...user.models import User
-
-from ...strings import TASK_EXIST_STR
 
 
 class TaskFormTestCase(TestCase):

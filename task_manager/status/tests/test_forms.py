@@ -1,9 +1,7 @@
 from django.test import TestCase
-from django import forms
 
 from ..forms import StatusForm
 from ..models import Status
-from ...strings import STATUS_EXIST_STR
 
 
 class StatusFormTestCase(TestCase):

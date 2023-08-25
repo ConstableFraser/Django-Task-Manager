@@ -8,6 +8,7 @@ from ...status.models import Status
 from ...strings import NEED_TO_SIGNIN_STR, TASK_EXIST_STR
 from ...util import messages_check
 
+
 class TaskViewTestCase(TestCase):
     def setUp(self):
         self.stts = Status.objects.create(name='Status#1')
@@ -89,7 +90,7 @@ class TaskViewTestCase(TestCase):
         self.tsk2.save()
         url = reverse('task_update', kwargs={"pk": self.tsk.id})
         response = self.client.post(url, {'name': 'task#2',
-                                         'status': self.stts,
-                                         'author': self.author}
+                                          'status': self.stts,
+                                          'author': self.author}
                                     )
         self.assertIn(str(_(TASK_EXIST_STR)), response.content.decode('utf8'))

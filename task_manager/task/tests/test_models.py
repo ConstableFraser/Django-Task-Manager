@@ -1,6 +1,5 @@
 from django.test import TestCase
 from django.db import IntegrityError
-from django.db.models.deletion import ProtectedError
 
 from task_manager.task.models import (Task, User, Status)
 from task_manager.task.filter import TasksFilter
@@ -11,7 +10,6 @@ class TaskTestModelCase(TestCase):
                 'Task_users.json',
                 'Task_statuses.json',
                 'Task_tasks.json']
-
 
     def test_create_tasks(self):
         Task1 = Task.objects.get(id=1)
@@ -31,7 +29,6 @@ class TaskTestModelCase(TestCase):
                                                  author=usr,
                                                  name="Nothing to do"))
 
-
     def test_update_task(self):
         Task1 = Task.objects.get(id=1)
         Task1.executor = None
@@ -41,16 +38,26 @@ class TaskTestModelCase(TestCase):
         Task1_new = Task.objects.get(name="What's happened")
         self.assertEqual(Task1_new.id, Task1.id)
 
-
     def test_filter_task(self):
         qs = Task.objects.all()
-        f = TasksFilter(data={'status': '', 'executor':'', 'author': '', 'labels': ''}, queryset=qs)
+        f = TasksFilter(data={'status': '',
+                              'executor': '',
+                              'author': '',
+                              'labels': ''},
+                        queryset=qs)
         self.assertEqual(f.qs.count(), qs.count())
-        f = TasksFilter(data={'status': 110, 'executor': 150, 'author': '', 'labels': ''}, queryset=qs)
+        f = TasksFilter(data={'status': 110,
+                              'executor': 150,
+                              'author': '',
+                              'labels': ''},
+                        queryset=qs)
         self.assertEqual(f.qs.count(), 1)
-        f = TasksFilter(data={'status': 111, 'executor': 152, 'author': '', 'labels': ''}, queryset=qs)
+        f = TasksFilter(data={'status': 111,
+                              'executor': 152,
+                              'author': '',
+                              'labels': ''},
+                        queryset=qs)
         self.assertEqual(f.qs.count(), 1)
-
 
     def test_delete_task(self):
         Task2 = Task.objects.get(id=2)

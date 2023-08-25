@@ -6,7 +6,9 @@ from ..models import Status
 
 
 class StatusTestModelCase(TestCase):
-    fixtures = ['Status_statuses.json', 'Status_users.json', 'Status_tasks.json']
+    fixtures = ['Status_statuses.json',
+                'Status_users.json',
+                'Status_tasks.json']
 
     def test_create_status(self):
         default = Status.objects.get(id=112)
@@ -20,14 +22,12 @@ class StatusTestModelCase(TestCase):
         with self.assertRaises(IntegrityError):
             self.assertFalse(Status.objects.create(name="default"))
 
-
     def test_update_status(self):
         backlog = Status.objects.get(id=110)
         backlog.name = 'Done'
         backlog.save()
         done = Status.objects.get(id=110)
         self.assertEqual(f'{done}', 'Done')
-
 
     def test_delete_status(self):
         completed = Status.objects.get(id=111)

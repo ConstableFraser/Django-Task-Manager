@@ -11,7 +11,6 @@ class LabelTestModelCase(TestCase):
                 'Label_statuses.json',
                 'Label_tasks.json']
 
-
     def test_create_label(self):
         Label1 = Label.objects.get(id=1)
         Label2 = Label.objects.get(id=2)
@@ -24,14 +23,12 @@ class LabelTestModelCase(TestCase):
         with self.assertRaises(IntegrityError):
             self.assertFalse(Label.objects.create(name="name_of_label"))
 
-
     def test_update_label(self):
         Label1 = Label.objects.get(id=1)
         Label1.name = "Name has been updated"
         Label1.save()
         Label1_new = Label.objects.get(name="Name has been updated")
         self.assertEqual(Label1_new.id, Label1.id)
-
 
     def test_delete_label(self):
         Label1 = Label.objects.get(id=1)

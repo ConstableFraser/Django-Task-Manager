@@ -1,9 +1,7 @@
 from django.test import TestCase
-from django import forms
 
 from ..forms import LabelForm
 from ..models import Label
-from ...strings import LABEL_EXIST_STR
 
 
 class LabelFormTestCase(TestCase):

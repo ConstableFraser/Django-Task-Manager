@@ -1,10 +1,11 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _ 
+from django.utils.translation import gettext_lazy as _
 
 from ..models import User
 from ...strings import NEED_TO_SIGNIN_STR
 from ...util import messages_check
+
 
 class UserViewTestCase(TestCase):
     def setUp(self):
@@ -14,10 +15,10 @@ class UserViewTestCase(TestCase):
                                         password='supersecret#89'
                                         )
         self.bobby = User.objects.create(first_name='Bobby',
-                                        last_name='Scott',
-                                        username='Bob',
-                                        password='supersecret#183'
-                                        )
+                                         last_name='Scott',
+                                         username='Bob',
+                                         password='supersecret#183'
+                                         )
 
     def test_view_user_list(self):
         response = self.client.get(reverse('users'))

@@ -7,6 +7,7 @@ from ...user.models import User
 from ...strings import NEED_TO_SIGNIN_STR, LABEL_EXIST_STR
 from ...util import messages_check
 
+
 class LabelViewTestCase(TestCase):
     def setUp(self):
         self.lbl1 = Label.objects.create(name='Label#1')

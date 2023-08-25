@@ -6,7 +6,6 @@ from task_manager.user.models import User
 class UserModelTestCase(TestCase):
     fixtures = ['User_users.json']
 
-
     def test_create_user(self):
         Gates = User.objects.get(first_name='Bill', last_name='Gates')
         Jobs = User.objects.get(first_name='Steve', last_name='Jobs')
@@ -14,7 +13,6 @@ class UserModelTestCase(TestCase):
         self.assertEqual(f'{Gates}', 'Bill Gates')
         self.assertEqual(f'{Jobs}', 'Steve Jobs')
         self.assertEqual(f'{Gubin}', 'Andrei Gubin')
-
 
     def test_update_user(self):
         Gubin = User.objects.get(first_name='Andrei', last_name='Gubin')
@@ -24,7 +22,6 @@ class UserModelTestCase(TestCase):
         Gubin.save()
         Astley = User.objects.get(username='RAstley')
         self.assertEqual(f'{Astley}', 'Rick Astley')
-
 
     def test_delete_user(self):
         Gates = User.objects.get(username='BG')

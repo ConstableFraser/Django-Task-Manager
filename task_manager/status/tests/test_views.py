@@ -7,6 +7,7 @@ from ...user.models import User
 from ...strings import NEED_TO_SIGNIN_STR, STATUS_EXIST_STR
 from ...util import messages_check
 
+
 class StatusViewTestCase(TestCase):
     def setUp(self):
         self.stts1 = Status.objects.create(name='Status#1')

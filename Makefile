@@ -14,4 +14,4 @@ test:
 	python manage.py test task_manager.task.tests.test_views
 
 lint:
-	poetry run flake8 task_manager
+	poetry run flake8 .
