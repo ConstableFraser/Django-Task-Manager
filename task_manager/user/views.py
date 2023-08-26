@@ -22,6 +22,17 @@ from ..strings import (NEED_TO_SIGNIN_STR,
                        )
 
 
+class AccessControl():
+    @classmethod
+    def control_permissions(self, inst):
+        if inst.request.user != inst.get_object():
+            messages.error(inst.request, _(USER_HVNT_PRMSSNS))
+            return HttpResponseRedirect(reverse('users'))
+        inst.object = inst.get_object()
+        inst.get_context_data(inst=inst.object)
+        return inst.render_to_response(inst.get_context_data())
+
+
 class UserDetailView(LoginRequiredMixin, SuccessMessageMixin, DetailView):
     model = User
     context_object_name = 'user'
@@ -61,7 +72,10 @@ class UserCreateView(SuccessMessageMixin, CreateView):
         return context
 
 
-class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin,
+                     SuccessMessageMixin,
+                     AccessControl,
+                     UpdateView):
     model = User
     form_class = UserForm
     template_name = 'user/user_form.html'
@@ -81,15 +95,10 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return context
 
     def get(self, request, *args, **kwargs):
-        if self.request.user != self.get_object():
-            messages.error(self.request, _(USER_HVNT_PRMSSNS))
-            return HttpResponseRedirect(reverse('users'))
-        self.object = self.get_object()
-        self.get_context_data(object=self.object)
-        return self.render_to_response(self.get_context_data())
+        return self.control_permissions(self)
 
 
-class UserDeleteView(LoginRequiredMixin, DeleteView):
+class UserDeleteView(LoginRequiredMixin, AccessControl, DeleteView):
     model = User
     template_name = 'confirm_delete.html'
     permission_denied_message = _(NEED_TO_SIGNIN_STR)
@@ -101,12 +110,7 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         return redirect(reverse('login'), code=302)
 
     def get(self, request, *args, **kwargs):
-        if self.request.user != self.get_object():
-            messages.error(self.request, _(USER_HVNT_PRMSSNS))
-            return HttpResponseRedirect(reverse('users'))
-        self.object = self.get_object()
-        self.get_context_data(object=self.object)
-        return self.render_to_response(self.get_context_data())
+        return self.control_permissions(self)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
