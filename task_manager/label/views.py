@@ -25,7 +25,7 @@ class LabelListView(LoginRequiredMixin, View):
     permission_denied_message = _(NEED_TO_SIGNIN_STR)
 
     def handle_no_permission(self):
-        messages.success(self.request, self.permission_denied_message)
+        messages.error(self.request, self.permission_denied_message)
         return redirect(reverse('login'), code=302)
 
     def get(self, request, *args, **kwargs):
@@ -46,7 +46,7 @@ class LabelCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     permission_denied_message = _(NEED_TO_SIGNIN_STR)
 
     def handle_no_permission(self):
-        messages.success(self.request, self.permission_denied_message)
+        messages.error(self.request, self.permission_denied_message)
         return redirect(reverse('login'), code=302)
 
     def get_context_data(self, **kwargs):
@@ -86,8 +86,8 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
     permission_denied_message = _(NEED_TO_SIGNIN_STR)
 
     def handle_no_permission(self):
-        messages.success(self.request,
-                         self.permission_denied_message)
+        messages.error(self.request,
+                       self.permission_denied_message)
         return redirect(reverse('login'), code=302)
 
     def post(self, request, *args, **kwargs):
