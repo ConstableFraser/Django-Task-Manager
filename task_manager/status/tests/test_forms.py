@@ -21,3 +21,5 @@ class StatusFormTestCase(TestCase):
         stts.save()
         form = StatusForm(data=data)
         self.assertFalse(form.is_valid())
+        with self.assertRaises(ValueError):
+            form.save()

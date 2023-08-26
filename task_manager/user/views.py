@@ -23,7 +23,6 @@ from ..strings import (NEED_TO_SIGNIN_STR,
 
 
 class AccessControl():
-    @classmethod
     def control_permissions(self, inst):
         if inst.request.user != inst.get_object():
             messages.error(inst.request, _(USER_HVNT_PRMSSNS))

@@ -85,6 +85,9 @@ class UserViewTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'user/user_form.html')
+        self.assertIn(str(_("Update a user")),
+                      response.content.decode('utf8'))
+        self.assertIn(str(_("Update")), response.content.decode('utf8'))
 
     def test_view_user_invalid_update(self):
         self.client.force_login(self.fred)

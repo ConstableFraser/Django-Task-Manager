@@ -23,6 +23,8 @@ class UserFormTestCase(TestCase):
                 }
         form = UserForm(data=data)
         self.assertFalse(form.is_valid())
+        with self.assertRaises(ValueError):
+            form.save()
 
     def test_invalid_form_required_password(self):
         data = {'first_name': 'Small',
@@ -32,6 +34,8 @@ class UserFormTestCase(TestCase):
                 }
         form = UserForm(data=data)
         self.assertFalse(form.is_valid())
+        with self.assertRaises(ValueError):
+            form.save()
 
     def test_invalid_form_required_password2(self):
         data = {'first_name': 'Big',
@@ -41,6 +45,8 @@ class UserFormTestCase(TestCase):
                 }
         form = UserForm(data=data)
         self.assertFalse(form.is_valid())
+        with self.assertRaises(ValueError):
+            form.save()
 
     def test_invalid_form_unique_username(self):
         data = {'first_name': 'Jo',
@@ -52,6 +58,8 @@ class UserFormTestCase(TestCase):
         usr.save()
         form = UserForm(data=data)
         self.assertFalse(form.is_valid())
+        with self.assertRaises(ValueError):
+            form.save()
 
     def test_invalid_form_text_username(self):
         data = {'first_name': 'Herald',
@@ -62,6 +70,9 @@ class UserFormTestCase(TestCase):
                 }
         form = UserForm(data=data)
         self.assertFalse(form.is_valid())
+        self.assertFalse(form.is_valid())
+        with self.assertRaises(ValueError):
+            form.save()
 
     def test_invalid_form_confirm_password(self):
         data = {'first_name': 'Herald',
@@ -72,3 +83,6 @@ class UserFormTestCase(TestCase):
                 }
         form = UserForm(data=data)
         self.assertFalse(form.is_valid())
+        self.assertFalse(form.is_valid())
+        with self.assertRaises(ValueError):
+            form.save()
