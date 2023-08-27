@@ -16,6 +16,12 @@ test:
 
 lint:
 	poetry run flake8 task_manager
+	poetry run flake8 task_manager/tests/
+	poetry run flake8 task_manager/user/tests/
+	poetry run flake8 task_manager/label/tests/
+	poetry run flake8 task_manager/task/tests/
+	poetry run flake8 task_manager/settings.py
+
 
 test-coverage:
 	poetry run coverage run manage.py test ./task_manager/tests
