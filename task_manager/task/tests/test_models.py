@@ -3,7 +3,6 @@ from django.db import IntegrityError
 
 from task_manager.task.models import (Task, User, Status)
 from task_manager.task.filter import TasksFilter
-from task_manager.user.models import User
 
 
 class TaskTestModelCase(TestCase):
