@@ -1,0 +1,13 @@
+
+img {
+  max-width: 100%;
+  height: auto;
+  margin: auto;
+  display: block;
+}
+
+.fnt {
+  font-family: verdana;
+  color: #afafaf;
+  text-align: center;
+}
