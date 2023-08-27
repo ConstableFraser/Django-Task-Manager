@@ -70,7 +70,6 @@ class UserFormTestCase(TestCase):
                 }
         form = UserForm(data=data)
         self.assertFalse(form.is_valid())
-        self.assertFalse(form.is_valid())
         with self.assertRaises(ValueError):
             form.save()
 
@@ -82,7 +81,6 @@ class UserFormTestCase(TestCase):
                 'password2': 'invalidpwd2'
                 }
         form = UserForm(data=data)
-        self.assertFalse(form.is_valid())
         self.assertFalse(form.is_valid())
         with self.assertRaises(ValueError):
             form.save()

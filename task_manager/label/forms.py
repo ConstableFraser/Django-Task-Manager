@@ -11,11 +11,6 @@ class LabelForm(forms.ModelForm):
         model = Label
         fields = ['name']
 
-    def __init__(self, *args, **kwargs):
-        super(LabelForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update({'autofocus': True,
-                                                 'required': True})
-
     def clean(self):
         cleaned_data = super(LabelForm, self).clean()
         name = cleaned_data.get("name")

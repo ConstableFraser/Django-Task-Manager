@@ -8,9 +8,7 @@ from ..util import set_status
 from ..strings import (USERNAME_REQUIRED,
                        CONFIRM_PWD,
                        PWD_NOT_MATCH,
-                       FIRST_NAME_REQUIRED,
                        USER_ALREADY_EXIST,
-                       PASSWORD_INFO_STR,
                        PWD_TOOLTIP,
                        )
 
@@ -29,20 +27,12 @@ class UserForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
-        self.fields['password1'].widget = forms.PasswordInput()
-        self.fields['password1'].help_text = _(PASSWORD_INFO_STR)
-        self.fields['first_name'].widget.attrs.update({'autofocus': True,
-                                                       'required': True
-                                                       })
-        self.fields['last_name'].required = True
+        self.fields['first_name'].required = True
 
     def clean(self):
         cleaned_data = super(UserForm, self).clean()
         self.check_password(cleaned_data)
         self.check_username(cleaned_data)
-        if not len(self.cleaned_data['first_name']):
-            set_status(self.fields['first_name'], 'invalid')
-            raise forms.ValidationError(_(FIRST_NAME_REQUIRED))
         return cleaned_data
 
     def save(self, commit=True):

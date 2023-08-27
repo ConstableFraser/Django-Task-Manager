@@ -11,11 +11,6 @@ class StatusForm(forms.ModelForm):
         model = Status
         fields = ['name']
 
-    def __init__(self, *args, **kwargs):
-        super(StatusForm, self).__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update({'autofocus': True,
-                                                 'required': True})
-
     def clean(self):
         cleaned_data = super(StatusForm, self).clean()
         name = cleaned_data.get("name")

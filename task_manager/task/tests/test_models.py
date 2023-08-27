@@ -3,6 +3,7 @@ from django.db import IntegrityError
 
 from task_manager.task.models import (Task, User, Status)
 from task_manager.task.filter import TasksFilter
+from task_manager.user.models import User
 
 
 class TaskTestModelCase(TestCase):
@@ -51,18 +52,21 @@ class TaskTestModelCase(TestCase):
         f = TasksFilter(data={'status': '',
                               'executor': '',
                               'author': '',
-                              'labels': ''},
+                              'labels': '',
+                              'self_tasks': False},
                         queryset=qs)
         self.assertEqual(f.qs.count(), qs.count())
         f = TasksFilter(data={'status': 110,
                               'executor': 150,
                               'author': '',
-                              'labels': ''},
+                              'labels': '',
+                              'self_tasks': False},
                         queryset=qs)
         self.assertEqual(f.qs.count(), 1)
         f = TasksFilter(data={'status': 111,
                               'executor': 152,
                               'author': '',
-                              'labels': ''},
+                              'labels': '',
+                              'self_tasks': False},
                         queryset=qs)
         self.assertEqual(f.qs.count(), 1)

@@ -46,11 +46,7 @@ class UserDetailView(LoginRequiredMixin, SuccessMessageMixin, DetailView):
 class UsersListView(View):
 
     def get(self, request, *args, **kwargs):
-        users = User.objects.only('id', 'username',
-                                  'first_name',
-                                  'last_name',
-                                  'date_joined'
-                                  ).order_by('-id')
+        users = User.objects.all().order_by('-id')
         return render(request, 'user/index.html',
                       context={'users': users, 'header': _('Users')}
                       )
@@ -120,10 +116,9 @@ class UserDeleteView(LoginRequiredMixin, AccessControl, DeleteView):
     def post(self, request, *args, **kwargs):
         user = self.get_object()
         tasks = Task.objects.filter(Q(executor=user) | Q(author=user))
-        if not tasks:
-            result = self.delete(request, *args, **kwargs)
-            messages.success(self.request, self.success_message)
-            return result
-        else:
+        if tasks:
             messages.error(self.request, _(USER_CANT_DELETE))
             return HttpResponseRedirect(reverse('users'))
+        else:
+            messages.success(self.request, self.success_message)
+            return self.delete(request, *args, **kwargs)

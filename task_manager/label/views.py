@@ -29,9 +29,7 @@ class LabelListView(LoginRequiredMixin, View):
         return redirect(reverse('login'), code=302)
 
     def get(self, request, *args, **kwargs):
-        labels = Label.objects.only('id', 'name',
-                                    'created_at'
-                                    ).order_by('-id')
+        labels = Label.objects.all().order_by('-id')
         return render(request, 'label/index.html',
                       context={'labels': labels, 'header': _('Labels')}
                       )
