@@ -7,12 +7,10 @@ from task_manager.user.models import User
 
 
 class LoginViewTestCase(TestCase):
+    fixtures = ['Register_users.json']
+
     def setUp(self):
-        self.fred = User.objects.create(first_name='Freddy',
-                                        last_name='Mercury',
-                                        username='Fred',
-                                        password='superSecret#1394'
-                                        )
+        self.fred = User.objects.get(username='Fred')
 
     def test_view_page_login(self):
         response = self.client.get(reverse('login'))

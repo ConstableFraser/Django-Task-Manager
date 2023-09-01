@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .models import Label
 from ..util import set_status
-from ..strings import LABEL_EXIST_STR
+from ..messages import LABEL_EXIST
 
 
 class LabelForm(forms.ModelForm):
@@ -16,6 +16,6 @@ class LabelForm(forms.ModelForm):
         name = cleaned_data.get("name")
         if Label.objects.filter(name=name).exclude(id=self.instance.id):
             set_status(self.fields['name'], 'invalid')
-            raise forms.ValidationError(_(LABEL_EXIST_STR))
+            raise forms.ValidationError(_(LABEL_EXIST))
 
         return cleaned_data

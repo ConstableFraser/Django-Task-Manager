@@ -149,7 +149,7 @@ msgid "Are you sure you want to delete"
 msgstr "Вы уверены, что хотите удалить"
 
 #: task_manager/templates/confirm_delete.html:17
-msgid "Yes, delete"
+msgid "Yes, delete"
 msgstr "Да, удалить"
 
 #: task_manager/templates/confirm_delete.html:18

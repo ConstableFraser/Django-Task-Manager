@@ -31,5 +31,35 @@
             "username": "AGubin",
             "password": "AGubin100500"
         }
+    },
+    {
+        "model": "user.User",
+        "pk": 153,
+        "fields": {
+            "first_name": "Freddy",
+            "last_name": "Mercury",
+            "username": "Fred",
+            "password": "supersecret#89"
+        }
+    },
+    {
+        "model": "user.User",
+        "pk": 154,
+        "fields": {
+            "first_name": "Bobby",
+            "last_name": "Scott",
+            "username": "Bob",
+            "password": "supersecret#183"
+        }
+    },
+    {
+        "model": "user.User",
+        "pk": 155,
+        "fields": {
+            "first_name": "Billy",
+            "last_name": "Winky",
+            "username": "Billy",
+            "password": "supersecret#829"
+        }
     }
 ]

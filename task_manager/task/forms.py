@@ -5,7 +5,7 @@ from .models import Task
 from .models import User
 from .models import Status
 from ..util import set_status
-from ..strings import TASK_EXIST_STR, TASK_HELP_STR
+from ..messages import TASK_EXIST, TASK_HELP
 
 
 class TaskForm(forms.ModelForm):
@@ -32,7 +32,7 @@ class TaskForm(forms.ModelForm):
         self.fields['executor'].required = False
         self.fields['executor'].label = _('Executor')
         self.fields['labels'].required = False
-        self.fields['labels'].help_text = _(TASK_HELP_STR)
+        self.fields['labels'].help_text = _(TASK_HELP)
         self.fields['labels'].label = _('Labels')
         self.fields['description'].label = _('Description')
 
@@ -41,6 +41,6 @@ class TaskForm(forms.ModelForm):
         name = cleaned_data.get("name")
         if Task.objects.filter(name=name).exclude(id=self.instance.id):
             set_status(self.fields['name'], 'invalid')
-            raise forms.ValidationError(_(TASK_EXIST_STR))
+            raise forms.ValidationError(_(TASK_EXIST))
 
         return cleaned_data

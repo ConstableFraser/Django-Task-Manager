@@ -31,5 +31,25 @@
             "username": "AGubin",
             "password": "AGubin100500"
         }
+    },
+    {
+        "model": "user.User",
+        "pk": 153,
+        "fields": {
+            "first_name": "John",
+            "last_name": "Smith",
+            "username": "JSmith",
+            "password": "JSM29_092$0113"
+        }
+    },
+    {
+        "model": "user.User",
+        "pk": 154,
+        "fields": {
+            "first_name": "Freddy",
+            "last_name": "Mercury",
+            "username": "Fred",
+            "password": "224_WQMWO9209*#"
+        }
     }
 ]

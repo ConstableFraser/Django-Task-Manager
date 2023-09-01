@@ -1,53 +1,64 @@
-from django.views import View
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.shortcuts import render, redirect
+from django.views.generic.list import ListView
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Status
 from .forms import StatusForm
 from ..task.models import Task
-from ..strings import (NEED_TO_SIGNIN_STR,
-                       STATUS_CREATED_STR,
-                       STATUS_UPDATED_STR,
-                       STATUS_DELETED_STR,
-                       STATUS_ISNTDELETE_STR,
-                       )
+from ..customhandlepermission import CustomHandlePermissionAuthorize
+from ..messages import (STATUS_CREATED,
+                        STATUS_UPDATED,
+                        STATUS_DELETED,
+                        STATUS_ISNOTDELETE
+                        )
 
 
-class StatusListView(LoginRequiredMixin, View):
+class StatusListView(CustomHandlePermissionAuthorize, ListView):
     redirect_field_name = ""
     raise_exception = True
-    permission_denied_message = _(NEED_TO_SIGNIN_STR)
+    model = Status
+    context_object_name = 'statuses'
+    template_name = 'status/index.html'
+
+    def test_func(self):
+        return self.request.user.is_authenticated
 
     def handle_no_permission(self):
-        messages.success(self.request, self.permission_denied_message)
-        return redirect(reverse('login'), code=302)
+        return self.check_for_login()
 
-    def get(self, request, *args, **kwargs):
-        statuses = Status.objects.only('id', 'name',
-                                       'created_at'
-                                       ).order_by('-id')
-        return render(request, 'status/index.html',
-                      context={'statuses': statuses, 'header': _('Statuses')}
-                      )
+    def check_for_login(self):
+        return super().check_for_login()
+
+    def get_queryset(self):
+        return Status.objects.all().order_by('-id')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["header"] = _('Statuses')
+        return context
 
 
-class StatusCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+class StatusCreateView(CustomHandlePermissionAuthorize,
+                       SuccessMessageMixin,
+                       CreateView):
     model = Status
     form_class = StatusForm
     template_name = 'status/status_form.html'
     success_url = reverse_lazy('statuses')
-    success_message = _(STATUS_CREATED_STR)
-    permission_denied_message = _(NEED_TO_SIGNIN_STR)
+    success_message = _(STATUS_CREATED)
+
+    def test_func(self):
+        return self.request.user.is_authenticated
 
     def handle_no_permission(self):
-        messages.success(self.request, self.permission_denied_message)
-        return redirect(reverse('login'), code=302)
+        return self.check_for_login()
+
+    def check_for_login(self):
+        return super().check_for_login()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -57,17 +68,23 @@ class StatusCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return context
 
 
-class StatusUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+class StatusUpdateView(CustomHandlePermissionAuthorize,
+                       SuccessMessageMixin,
+                       UpdateView):
     model = Status
     form_class = StatusForm
     template_name = 'status/status_form.html'
     success_url = reverse_lazy('statuses')
-    permission_denied_message = _(NEED_TO_SIGNIN_STR)
-    success_message = _(STATUS_UPDATED_STR)
+    success_message = _(STATUS_UPDATED)
+
+    def test_func(self):
+        return self.request.user.is_authenticated
 
     def handle_no_permission(self):
-        messages.error(self.request, self.permission_denied_message)
-        return redirect(reverse('login'), code=302)
+        return self.check_for_login()
+
+    def check_for_login(self):
+        return super().check_for_login()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -77,16 +94,21 @@ class StatusUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return context
 
 
-class StatusDeleteView(LoginRequiredMixin, DeleteView):
+class StatusDeleteView(CustomHandlePermissionAuthorize,
+                       DeleteView):
     model = Status
     template_name = 'confirm_delete.html'
-    success_message = _(STATUS_DELETED_STR)
+    success_message = _(STATUS_DELETED)
     success_url = reverse_lazy('statuses')
-    permission_denied_message = _(NEED_TO_SIGNIN_STR)
+
+    def test_func(self):
+        return self.request.user.is_authenticated
 
     def handle_no_permission(self):
-        messages.success(self.request, self.permission_denied_message)
-        return redirect(reverse('login'), code=302)
+        return self.check_for_login()
+
+    def check_for_login(self):
+        return super().check_for_login()
 
     def post(self, request, *args, **kwargs):
         tasks = Task.objects.filter(status=self.get_object())
@@ -95,7 +117,7 @@ class StatusDeleteView(LoginRequiredMixin, DeleteView):
             messages.success(self.request, self.success_message)
             return result
         else:
-            messages.error(self.request, _(STATUS_ISNTDELETE_STR))
+            messages.error(self.request, _(STATUS_ISNOTDELETE))
             return HttpResponseRedirect(reverse('statuses'))
 
     def get_context_data(self, **kwargs):

@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from task_manager.user.forms import UserForm
 from task_manager.user.models import User
+from task_manager.user.forms import UserCreateForm
 
 
 class UserFormTestCase(TestCase):
@@ -12,7 +12,7 @@ class UserFormTestCase(TestCase):
                 'password1': 'justPassword555',
                 'password2': 'justPassword555'
                 }
-        form = UserForm(data=data)
+        form = UserCreateForm(data=data)
         self.assertTrue(form.is_valid())
 
     def test_invalid_form_required_first_name(self):
@@ -21,7 +21,7 @@ class UserFormTestCase(TestCase):
                 'password1': 'justPassword555',
                 'password2': 'justPassword555'
                 }
-        form = UserForm(data=data)
+        form = UserCreateForm(data=data)
         self.assertFalse(form.is_valid())
         with self.assertRaises(ValueError):
             form.save()
@@ -32,7 +32,7 @@ class UserFormTestCase(TestCase):
                 'username1': 'smUser',
                 'password2': 'justPassword555'
                 }
-        form = UserForm(data=data)
+        form = UserCreateForm(data=data)
         self.assertFalse(form.is_valid())
         with self.assertRaises(ValueError):
             form.save()
@@ -43,7 +43,7 @@ class UserFormTestCase(TestCase):
                 'username': 'bigUser',
                 'password1': 'justPassword555'
                 }
-        form = UserForm(data=data)
+        form = UserCreateForm(data=data)
         self.assertFalse(form.is_valid())
         with self.assertRaises(ValueError):
             form.save()
@@ -56,7 +56,7 @@ class UserFormTestCase(TestCase):
                 }
         usr = User.objects.create(**data)
         usr.save()
-        form = UserForm(data=data)
+        form = UserCreateForm(data=data)
         self.assertFalse(form.is_valid())
         with self.assertRaises(ValueError):
             form.save()
@@ -68,7 +68,7 @@ class UserFormTestCase(TestCase):
                 'password1': 'justPassword555',
                 'password2': 'justPassword555'
                 }
-        form = UserForm(data=data)
+        form = UserCreateForm(data=data)
         self.assertFalse(form.is_valid())
         with self.assertRaises(ValueError):
             form.save()
@@ -80,7 +80,7 @@ class UserFormTestCase(TestCase):
                 'password1': 'justPassword555',
                 'password2': 'invalidpwd2'
                 }
-        form = UserForm(data=data)
+        form = UserCreateForm(data=data)
         self.assertFalse(form.is_valid())
         with self.assertRaises(ValueError):
             form.save()

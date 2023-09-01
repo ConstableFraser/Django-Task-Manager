@@ -4,45 +4,43 @@ from django.utils.translation import gettext_lazy as _
 
 from task_manager.status.models import Status
 from task_manager.user.models import User
-from task_manager.strings import NEED_TO_SIGNIN_STR, STATUS_EXIST_STR
+from task_manager.messages import NEED_TO_SIGNIN, STATUS_EXIST
 from task_manager.util import messages_check
 
 
 class StatusViewTestCase(TestCase):
+    fixtures = ['Status_statuses.json', 'Status_users.json']
+
     def setUp(self):
-        self.stts1 = Status.objects.create(name='Status#1')
-        self.stts2 = Status.objects.create(name='Status#2')
-        self.fred = User.objects.create(first_name='Freddy',
-                                        last_name='Mercury',
-                                        username='Fred',
-                                        password='supersecret#01'
-                                        )
+        self.status1 = Status.objects.get(name='Status#1')
+        self.status2 = Status.objects.get(name='Status#2')
+        self.fred = User.objects.get(username='Fred')
 
     def test_view_status_list_login_required(self):
         response = self.client.get(reverse('statuses'))
         self.assertEqual(response.status_code, 302)
 
     def test_status_crud_login_required(self):
-        url = reverse('status_update', kwargs={"pk": self.stts1.id})
+        url = reverse('status_update', kwargs={"pk": self.status1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
         cnt, msg = messages_check(self, reverse("home"))
         self.assertEqual(cnt, 1)
-        self.assertEqual(str(msg), _(NEED_TO_SIGNIN_STR))
+        self.assertEqual(str(msg), _(NEED_TO_SIGNIN))
 
-        url = reverse('status_delete', kwargs={"pk": self.stts1.id})
+        url = reverse('status_delete', kwargs={"pk": self.status1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
         cnt, msg = messages_check(self, reverse("home"))
         self.assertEqual(cnt, 1)
-        self.assertEqual(str(msg), _(NEED_TO_SIGNIN_STR))
+        self.assertEqual(str(msg), _(NEED_TO_SIGNIN))
 
         url = reverse('status_create')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
         cnt, msg = messages_check(self, reverse("home"))
         self.assertEqual(cnt, 1)
-        self.assertEqual(str(msg), _(NEED_TO_SIGNIN_STR))
+        self.assertEqual(str(msg), _(NEED_TO_SIGNIN))
 
     def test_view_status_list_signin(self):
         self.client.force_login(self.fred)
@@ -58,20 +56,20 @@ class StatusViewTestCase(TestCase):
 
     def test_view_status_valid_update(self):
         self.client.force_login(self.fred)
-        url = reverse('status_update', kwargs={"pk": self.stts1.id})
+        url = reverse('status_update', kwargs={"pk": self.status1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'status/status_form.html')
 
     def test_view_status_valid_delete(self):
         self.client.force_login(self.fred)
-        url = reverse('status_delete', kwargs={"pk": self.stts1.id})
+        url = reverse('status_delete', kwargs={"pk": self.status1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'confirm_delete.html')
 
     def test_view_status_update_unique(self):
         self.client.force_login(self.fred)
-        url = reverse('status_update', kwargs={"pk": self.stts1.id})
+        url = reverse('status_update', kwargs={"pk": self.status1.id})
         response = self.client.post(url, {"name": "Status#2"})
-        self.assertIn(str(_(STATUS_EXIST_STR)), response.content.decode('utf8'))
+        self.assertIn(str(_(STATUS_EXIST)), response.content.decode('utf8'))

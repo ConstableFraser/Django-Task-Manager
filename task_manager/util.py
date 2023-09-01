@@ -2,7 +2,7 @@
 def messages_check(self, url):
     response = self.client.get(url)
     messages = list(response.context['messages'])
-    return len(messages), messages[0]
+    return len(messages), *messages
 
 
 def set_status(field, status):

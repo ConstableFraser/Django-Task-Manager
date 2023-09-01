@@ -11,7 +11,7 @@ class LabelTestModelCase(TestCase):
                 'Label_statuses.json',
                 'Label_tasks.json']
 
-    def test_create_label(self):
+    def test_exist_labels(self):
         Label1 = Label.objects.get(id=1)
         Label2 = Label.objects.get(id=2)
         Label3 = Label.objects.get(id=3)

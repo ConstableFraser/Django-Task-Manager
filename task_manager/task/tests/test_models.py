@@ -11,22 +11,19 @@ class TaskTestModelCase(TestCase):
                 'Task_statuses.json',
                 'Task_tasks.json']
 
-    def test_create_tasks(self):
+    def test_exist_tasks(self):
         Task1 = Task.objects.get(id=1)
         Task2 = Task.objects.get(id=2)
         Task3 = Task.objects.get(id=3)
         self.assertEqual(f'{Task1}', 'Nothing to do')
         self.assertEqual(f'{Task2}', 'complete a professional course')
         self.assertEqual(f'{Task3}', 'do the something')
-        stts = Status.objects.get(id=110)
-        usr = User.objects.get(id=151)
-        self.assertTrue(Task.objects.create(status=stts,
-                                            author=usr,
-                                            name="do what is right and \
-                                            come what may..."))
+        status = Status.objects.get(id=110)
+        user = User.objects.get(id=151)
+
         with self.assertRaises(IntegrityError):
-            self.assertFalse(Task.objects.create(status=stts,
-                                                 author=usr,
+            self.assertFalse(Task.objects.create(status=status,
+                                                 author=user,
                                                  name="Nothing to do"))
 
     def test_update_task(self):

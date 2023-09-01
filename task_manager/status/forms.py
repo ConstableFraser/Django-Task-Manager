@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .models import Status
 from ..util import set_status
-from ..strings import STATUS_EXIST_STR
+from ..messages import STATUS_EXIST
 
 
 class StatusForm(forms.ModelForm):
@@ -16,6 +16,6 @@ class StatusForm(forms.ModelForm):
         name = cleaned_data.get("name")
         if Status.objects.filter(name=name).exclude(id=self.instance.id):
             set_status(self.fields['name'], 'invalid')
-            raise forms.ValidationError(_(STATUS_EXIST_STR))
+            raise forms.ValidationError(_(STATUS_EXIST))
 
         return cleaned_data

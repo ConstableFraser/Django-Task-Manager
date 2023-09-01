@@ -10,7 +10,7 @@ class StatusTestModelCase(TestCase):
                 'Status_users.json',
                 'Status_tasks.json']
 
-    def test_create_status(self):
+    def test_exist_status(self):
         default = Status.objects.get(id=112)
         backlog = Status.objects.get(id=110)
         completed = Status.objects.get(id=111)

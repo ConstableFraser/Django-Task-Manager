@@ -7,15 +7,17 @@ from task_manager.user.models import User
 
 
 class TaskFormTestCase(TestCase):
+    fixtures = ['Task_labels.json',
+                'Task_users.json',
+                'Task_statuses.json',
+                'Task_tasks.json']
+
     def setUp(self):
-        self.status = Status.objects.create(name='backlog')
-        self.smith = User.objects.create(first_name='John',
-                                         last_name='Smith',
-                                         username='JSmith',
-                                         password='pwdScrt007')
+        self.status = Status.objects.get(name='backlog')
+        self.author = User.objects.get(username='JSmith')
         self.data = {'name': 'task#1',
                      'status': self.status,
-                     'author': self.smith
+                     'author': self.author
                      }
 
     def test_valid_form(self):

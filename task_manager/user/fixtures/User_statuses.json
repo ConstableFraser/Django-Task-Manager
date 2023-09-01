@@ -1,0 +1,10 @@
+[
+    {
+        "model": "status.Status",
+        "pk": 210,
+        "fields": {
+            "name": "status#1",
+            "created_at": "2009-07-10 11:16:09.184106+03:00"
+        }
+    }
+]

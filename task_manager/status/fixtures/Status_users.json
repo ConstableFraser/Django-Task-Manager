@@ -31,5 +31,16 @@
             "username": "andr",
             "password": "rgoi28geWOG"
         }
+    },
+    {
+        "model": "user.User",
+        "pk": 31,
+        "fields": {
+            "first_name": "Freddy",
+            "last_name": "Mercury",
+            "email": "fred@free.ai",
+            "username": "Fred",
+            "password": "WEG_138Q*("
+        }
     }
 ]

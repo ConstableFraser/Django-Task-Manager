@@ -31,5 +31,15 @@
             "username": "andr",
             "password": "rgoi28geWOG"
         }
+    },
+    {
+        "model": "user.User",
+        "pk": 40,
+        "fields": {
+            "first_name": "Freddy",
+            "last_name": "Mercury",
+            "username": "Fred",
+            "password": "w22@sbgeWGW"
+        }
     }
 ]
