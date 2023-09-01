@@ -17,17 +17,15 @@ ticket management system
 2. authorized user can create and update tickets, statuses and labels
 3. only the author can delete tickets and own account
 
-
-
 ## demo version:
 https://task-managet-django.onrender.com/
 or
 [![Watch the video](staticfiles/images/Figaro_preview.png)](https://youtu.be/aBok39kZT9Q)
 
-##technical information
+## technical information
 
-###info about structure of db
+### info about structure of db
 ![database](staticfiles/images/structure_db.png)
 
-###tech stack
+### tech stack
 djnago, python, poetry, gunicorn, jinja2, bootstrap, rollbar, whitenoise

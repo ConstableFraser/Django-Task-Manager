@@ -391,3 +391,6 @@ msgstr "Задача успешно удалена"
 
 msgid "A task with this name already exists."
 msgstr "Задача с таким именеем уже существует"
+
+msgid "Enter the same password as before, for verification."
+msgstr "Подтвердите пароль"
