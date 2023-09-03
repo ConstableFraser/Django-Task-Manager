@@ -32,7 +32,7 @@ test-coverage:
 	poetry run coverage report -m --include=task_manager/* --omit=task_manager/settings.py
 	poetry run coverage xml --include=task_manager/* --omit=task_manager/settings.py
 
-dev:
+start:
 	poetry run python manage.py runserver
 
 migrations:
