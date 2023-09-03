@@ -19,7 +19,9 @@ ticket management system
 
 ## demo version:
 https://task-managet-django.onrender.com/
-or
+
+or watch the video:
+
 [![Watch the video](staticfiles/images/Figaro_preview.png)](https://youtu.be/aBok39kZT9Q)
 
 ## technical information
