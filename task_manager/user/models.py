@@ -4,8 +4,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
-    first_name = models.CharField(_("First name"), blank=False)
-    last_name = models.CharField(_("Last name"), blank=False)
+    first_name = models.CharField(_("First name"),
+                                  max_length=150,
+                                  blank=False)
+    last_name = models.CharField(_("Last name"),
+                                 max_length=150,
+                                 blank=False)
 
     REQUIRED_FIELDS = [first_name, last_name]
 

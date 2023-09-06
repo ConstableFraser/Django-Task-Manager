@@ -14,7 +14,6 @@ import os
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
-from django.views.generic import TemplateView
 from django.utils.translation import gettext_lazy
 
 load_dotenv()
