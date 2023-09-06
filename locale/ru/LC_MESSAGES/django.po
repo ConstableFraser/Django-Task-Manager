@@ -369,13 +369,13 @@ msgstr "Вы не авторизованы! Пожалуйста, выполни
 msgid "You are signed in"
 msgstr "Вы залогинены"
 
+msgid "You are sign out"
+msgstr "Вы разлогинены"
+
 msgid "Please enter correct username or password"
 msgstr ""
 "Пожалуйста, введите правильные имя пользователя и пароль. Оба поля могут "
 "быть чувствительны к регистру."
-
-msgid "You are sign out"
-msgstr "Вы разлогинены"
 
 msgid "User deleted successfully"
 msgstr "Пользователь успешно удален"

@@ -1,11 +1,20 @@
 [
     {
+        "model": "status.Status",
+        "pk": 310,
+        "fields": {
+            "name": "backlog",
+            "created_at": "2009-07-10 11:16:09.184106+03:00"
+        }
+    },
+
+    {
         "model": "task.Task",
         "pk": 199,
         "fields": {
             "name": "task#1",
             "description": "task#1",
-            "status": 210,
+            "status": 310,
             "author": 155,
             "created_at": "2023-09-22 22:10:09.174126+03:00"
         }

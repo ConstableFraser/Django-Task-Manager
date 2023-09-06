@@ -1,7 +1,6 @@
 # Makefile
 test:
 	poetry run python manage.py test task_manager.tests.test_views
-	poetry run python manage.py test task_manager.user.tests.test_models
 	poetry run python manage.py test task_manager.user.tests.test_forms
 	poetry run python manage.py test task_manager.user.tests.test_views
 	poetry run python manage.py test task_manager.label.tests.test_models

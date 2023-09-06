@@ -7,18 +7,12 @@ from .models import User
 
 
 class UserCreateForm(UserCreationForm):
-    first_name = forms.CharField(label=_("First name"), required=True)
-    last_name = forms.CharField(label=_("Last name"), required=True)
-
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username']
 
 
 class UserUpdateForm(UserChangeForm):
-    first_name = forms.CharField(label=_("First name"), required=True)
-    last_name = forms.CharField(label=_("Last name"), required=True)
-
     password = None
     help_text = password_validation.password_validators_help_text_html()
     password1 = forms.CharField(label=_("Password"),

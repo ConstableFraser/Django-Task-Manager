@@ -7,7 +7,6 @@ from task_manager.user.models import User
 from task_manager.status.models import Status
 from task_manager.messages import (NEED_TO_SIGNIN,
                                    TASK_EXIST)
-from task_manager.util import messages_check
 
 
 class TaskViewTestCase(TestCase):
@@ -29,23 +28,20 @@ class TaskViewTestCase(TestCase):
         url = reverse('task_update', kwargs={"pk": self.task.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
-        cnt, msg = messages_check(self, reverse("home"))
-        self.assertEqual(cnt, 1)
-        self.assertEqual(str(msg), _(NEED_TO_SIGNIN))
+        response = self.client.get(reverse('login'))
+        self.assertContains(response, _(NEED_TO_SIGNIN))
 
         url = reverse('task_delete', kwargs={"pk": self.task.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
-        cnt, msg = messages_check(self, reverse("home"))
-        self.assertEqual(cnt, 1)
-        self.assertEqual(str(msg), _(NEED_TO_SIGNIN))
+        response = self.client.get(reverse('login'))
+        self.assertContains(response, _(NEED_TO_SIGNIN))
 
         url = reverse('task_create')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
-        cnt, msg = messages_check(self, reverse("home"))
-        self.assertEqual(cnt, 1)
-        self.assertEqual(str(msg), _(NEED_TO_SIGNIN))
+        response = self.client.get(reverse('login'))
+        self.assertContains(response, _(NEED_TO_SIGNIN))
 
     def test_view_task_list_signin(self):
         self.client.force_login(self.author)
@@ -92,4 +88,4 @@ class TaskViewTestCase(TestCase):
                                           'status': self.status,
                                           'author': self.author}
                                     )
-        self.assertIn(str(_(TASK_EXIST)), response.content.decode('utf8'))
+        self.assertContains(response, _(TASK_EXIST))

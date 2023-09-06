@@ -10,17 +10,17 @@ class LoginViewTestCase(TestCase):
     fixtures = ['Register_users.json']
 
     def setUp(self):
-        self.fred = User.objects.get(username='Fred')
+        self.user_fred = User.objects.get(username='Fred')
 
     def test_view_page_login(self):
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'user/user_signin.html')
-        self.assertIn(str(_("Username")), response.content.decode('utf8'))
-        self.assertIn(str(_("Password")), response.content.decode('utf8'))
+        self.assertTemplateUsed(response, 'registration/login.html')
+        self.assertContains(response, _("Username"))
+        self.assertContains(response, _("Password"))
 
     def test_view_login_valid(self):
-        self.client.force_login(self.fred)
+        self.client.force_login(self.user_fred)
         response = self.client.get(reverse('home'))
         self.assertIn("[Freddy Mercury]", response.content.decode('utf8'))
         self.assertTemplateUsed(response, 'index.html')

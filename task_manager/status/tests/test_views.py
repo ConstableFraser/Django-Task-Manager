@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 from task_manager.status.models import Status
 from task_manager.user.models import User
 from task_manager.messages import NEED_TO_SIGNIN, STATUS_EXIST
-from task_manager.util import messages_check
 
 
 class StatusViewTestCase(TestCase):
@@ -24,23 +23,20 @@ class StatusViewTestCase(TestCase):
         url = reverse('status_update', kwargs={"pk": self.status1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
-        cnt, msg = messages_check(self, reverse("home"))
-        self.assertEqual(cnt, 1)
-        self.assertEqual(str(msg), _(NEED_TO_SIGNIN))
+        response = self.client.get(reverse('login'))
+        self.assertContains(response, _(NEED_TO_SIGNIN))
 
         url = reverse('status_delete', kwargs={"pk": self.status1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
-        cnt, msg = messages_check(self, reverse("home"))
-        self.assertEqual(cnt, 1)
-        self.assertEqual(str(msg), _(NEED_TO_SIGNIN))
+        response = self.client.get(reverse('login'))
+        self.assertContains(response, _(NEED_TO_SIGNIN))
 
         url = reverse('status_create')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
-        cnt, msg = messages_check(self, reverse("home"))
-        self.assertEqual(cnt, 1)
-        self.assertEqual(str(msg), _(NEED_TO_SIGNIN))
+        response = self.client.get(reverse('login'))
+        self.assertContains(response, _(NEED_TO_SIGNIN))
 
     def test_view_status_list_signin(self):
         self.client.force_login(self.fred)
@@ -72,4 +68,4 @@ class StatusViewTestCase(TestCase):
         self.client.force_login(self.fred)
         url = reverse('status_update', kwargs={"pk": self.status1.id})
         response = self.client.post(url, {"name": "Status#2"})
-        self.assertIn(str(_(STATUS_EXIST)), response.content.decode('utf8'))
+        self.assertContains(response, _(STATUS_EXIST))

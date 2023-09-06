@@ -8,37 +8,23 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Task
 from .forms import TaskForm
 from .filter import TasksFilter
-from ..customhandlepermission import CustomHandlePermissionAuthorize
+from ..mixins import TaskModifyMixin, NotifyLoginRequiredMixin
 from ..messages import (TASK_CREATED,
                         TASK_UPDATED,
                         TASK_DELETED,
-                        TASK_NON_AUTHOR,
+                        NEED_TO_SIGNIN
                         )
 
 
-class TaskListView(CustomHandlePermissionAuthorize, FilterView):
+class TaskListView(NotifyLoginRequiredMixin, FilterView):
     model = Task
-    redirect_field_name = ""
-    raise_exception = True
     filterset_class = TasksFilter
     template_name = 'task/index.html'
-
-    def test_func(self):
-        return self.request.user.is_authenticated
-
-    def handle_no_permission(self):
-        return self.check_for_login()
-
-    def check_for_login(self):
-        return super().check_for_login()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["header"] = _("Tasks")
-        return context
+    extra_content = {'header': _("Tasks")}
+    permission_denied_message = _(NEED_TO_SIGNIN)
 
 
-class TaskCreateView(CustomHandlePermissionAuthorize,
+class TaskCreateView(NotifyLoginRequiredMixin,
                      SuccessMessageMixin,
                      CreateView):
     model = Task
@@ -46,15 +32,7 @@ class TaskCreateView(CustomHandlePermissionAuthorize,
     template_name = 'task/task_form.html'
     success_url = reverse_lazy('tasks')
     success_message = _(TASK_CREATED)
-
-    def test_func(self):
-        return self.request.user.is_authenticated
-
-    def handle_no_permission(self):
-        return self.check_for_login()
-
-    def check_for_login(self):
-        return super().check_for_login()
+    permission_denied_message = _(NEED_TO_SIGNIN)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -68,7 +46,7 @@ class TaskCreateView(CustomHandlePermissionAuthorize,
         return super().form_valid(form)
 
 
-class TaskUpdateView(CustomHandlePermissionAuthorize,
+class TaskUpdateView(NotifyLoginRequiredMixin,
                      SuccessMessageMixin,
                      UpdateView):
     model = Task
@@ -76,15 +54,7 @@ class TaskUpdateView(CustomHandlePermissionAuthorize,
     template_name = 'task/task_form.html'
     success_url = reverse_lazy('tasks')
     success_message = _(TASK_UPDATED)
-
-    def test_func(self):
-        return self.request.user.is_authenticated
-
-    def handle_no_permission(self):
-        return self.check_for_login()
-
-    def check_for_login(self):
-        return super().check_for_login()
+    permission_denied_message = _(NEED_TO_SIGNIN)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -94,23 +64,14 @@ class TaskUpdateView(CustomHandlePermissionAuthorize,
         return context
 
 
-class TaskDeleteView(CustomHandlePermissionAuthorize,
+class TaskDeleteView(TaskModifyMixin,
                      SuccessMessageMixin,
                      DeleteView):
     model = Task
     template_name = 'confirm_delete.html'
     success_url = reverse_lazy('tasks')
     success_message = _(TASK_DELETED)
-    permission_denied_message = _(TASK_NON_AUTHOR)
-
-    def test_func(self):
-        return self.request.user == self.get_object().author
-
-    def handle_no_permission(self):
-        return self.check_for_authorize()
-
-    def check_for_authorize(self):
-        return super().check_for_authorize(self)
+    permission_denied_message = _(NEED_TO_SIGNIN)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -124,21 +85,9 @@ class TaskDeleteView(CustomHandlePermissionAuthorize,
         return self.render_to_response(self.get_context_data())
 
 
-class TaskReadView(CustomHandlePermissionAuthorize, DetailView):
+class TaskReadView(NotifyLoginRequiredMixin, DetailView):
     model = Task
     template_name = 'task/task_card.html'
     success_url = reverse_lazy('tasks')
-
-    def test_func(self):
-        return self.request.user.is_authenticated
-
-    def handle_no_permission(self):
-        return self.check_for_login()
-
-    def check_for_login(self):
-        return super().check_for_login()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["header"] = _("View task")
-        return context
+    permission_denied_message = _(NEED_TO_SIGNIN)
+    extra_content = {'header': _("View task")}
