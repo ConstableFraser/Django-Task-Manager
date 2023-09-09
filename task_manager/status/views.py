@@ -8,7 +8,6 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Status
 from .forms import StatusForm
-from ..task.models import Task
 from ..mixins import HandlePermissionMixin
 from ..messages import (STATUS_CREATED,
                         STATUS_UPDATED,
@@ -63,7 +62,7 @@ class StatusDeleteView(HandlePermissionMixin,
     extra_context = {'header': _("Delete status")}
 
     def post(self, request, *args, **kwargs):
-        status=self.get_object()
+        status = self.get_object()
         tasks = status.task_set.exists()
         if not tasks:
             result = self.delete(request, *args, **kwargs)
