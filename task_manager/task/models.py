@@ -29,9 +29,6 @@ class Task(models.Model):
                                     through='TaskToLabel',
                                     through_fields=('task', 'label'))
 
-    class Meta:
-        ordering = ['-id']
-
     def __str__(self):
         return self.name
 

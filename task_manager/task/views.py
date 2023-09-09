@@ -8,7 +8,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Task
 from .forms import TaskForm
 from .filter import TasksFilter
-from ..mixins import TaskModifyMixin, NotifyLoginRequiredMixin
+from ..mixins import TaskModifyMixin, HandlePermissionMixin
 from ..messages import (TASK_CREATED,
                         TASK_UPDATED,
                         TASK_DELETED,
@@ -16,15 +16,16 @@ from ..messages import (TASK_CREATED,
                         )
 
 
-class TaskListView(NotifyLoginRequiredMixin, FilterView):
+class TaskListView(HandlePermissionMixin, FilterView):
     model = Task
     filterset_class = TasksFilter
     template_name = 'task/index.html'
-    extra_content = {'header': _("Tasks")}
-    permission_denied_message = _(NEED_TO_SIGNIN)
+    extra_context = {'header': _('Tasks')}
+    ordering = ['-id']
+    required_login_message = _(NEED_TO_SIGNIN)
 
 
-class TaskCreateView(NotifyLoginRequiredMixin,
+class TaskCreateView(HandlePermissionMixin,
                      SuccessMessageMixin,
                      CreateView):
     model = Task
@@ -32,21 +33,16 @@ class TaskCreateView(NotifyLoginRequiredMixin,
     template_name = 'task/task_form.html'
     success_url = reverse_lazy('tasks')
     success_message = _(TASK_CREATED)
-    permission_denied_message = _(NEED_TO_SIGNIN)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["header"] = _("Create task")
-        context["commit_name"] = _("Create")
-        context["back_referer"] = self.request.META.get('HTTP_REFERER')
-        return context
+    required_login_message = _(NEED_TO_SIGNIN)
+    extra_context = {'header': _("Create task"),
+                     'commit_name': _("Create")}
 
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
 
-class TaskUpdateView(NotifyLoginRequiredMixin,
+class TaskUpdateView(HandlePermissionMixin,
                      SuccessMessageMixin,
                      UpdateView):
     model = Task
@@ -54,14 +50,9 @@ class TaskUpdateView(NotifyLoginRequiredMixin,
     template_name = 'task/task_form.html'
     success_url = reverse_lazy('tasks')
     success_message = _(TASK_UPDATED)
-    permission_denied_message = _(NEED_TO_SIGNIN)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["header"] = _("Update task")
-        context["commit_name"] = _("Update")
-        context["back_referer"] = self.request.META.get('HTTP_REFERER')
-        return context
+    required_login_message = _(NEED_TO_SIGNIN)
+    extra_context = {'header': _("Update task"),
+                     'commit_name': _("Update")}
 
 
 class TaskDeleteView(TaskModifyMixin,
@@ -71,7 +62,7 @@ class TaskDeleteView(TaskModifyMixin,
     template_name = 'confirm_delete.html'
     success_url = reverse_lazy('tasks')
     success_message = _(TASK_DELETED)
-    permission_denied_message = _(NEED_TO_SIGNIN)
+    extra_context = {'header': _("Delete task")}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -85,9 +76,9 @@ class TaskDeleteView(TaskModifyMixin,
         return self.render_to_response(self.get_context_data())
 
 
-class TaskReadView(NotifyLoginRequiredMixin, DetailView):
+class TaskReadView(HandlePermissionMixin, DetailView):
     model = Task
     template_name = 'task/task_card.html'
     success_url = reverse_lazy('tasks')
-    permission_denied_message = _(NEED_TO_SIGNIN)
+    required_login_message = _(NEED_TO_SIGNIN)
     extra_content = {'header': _("View task")}

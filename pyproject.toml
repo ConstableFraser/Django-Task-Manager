@@ -16,17 +16,18 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = ">=3.8.0"
-python-dotenv = "^1.0.0"
-dj-database-url = "^2.0.0"
-psycopg2-binary = "^2.9.6"
 gunicorn = "^20.1.0"
 django-bootstrap4 = "^23.1"
 django-filter = "^23.2"
 rollbar = "^0.16.3"
-flake8 = "^4.0.1"
-coverage = "^7.3.0"
 whitenoise = {extras = ["brotli"], version = "^6.5.0"}
 
+[tool.poetry.dev-dependencies]
+flake8 = "^4.0.1"
+coverage = "^7.3.0"
+psycopg2-binary = "^2.9.6"
+dj-database-url = "^2.0.0"
+python-dotenv = "^1.0.0"
 
 [build-system]
 requires = ["poetry-core"]

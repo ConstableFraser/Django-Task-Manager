@@ -114,10 +114,8 @@ msgid "Create task"
 msgstr "Создать задачу"
 
 #: task_manager/task/views.py:79
-#, fuzzy
-#| msgid "Update status"
 msgid "Update task"
-msgstr "Изменение статуса"
+msgstr "Изменение задачи"
 
 #: task_manager/task/views.py:98
 msgid "Delete task"

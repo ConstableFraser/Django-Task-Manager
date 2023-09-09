@@ -11,7 +11,7 @@ from task_manager.messages import (NEED_TO_SIGNIN,
 
 
 class UserViewTestCase(TestCase):
-    fixtures = ['User_users.json', 'User_tasks.json']
+    fixtures = ['User_statuses.json', 'User_users.json', 'User_tasks.json']
 
     def setUp(self):
         self.user_fred = User.objects.get(username='Fred')

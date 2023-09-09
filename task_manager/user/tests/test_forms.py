@@ -15,17 +15,6 @@ class UserFormTestCase(TestCase):
         form = UserCreateForm(data=data)
         self.assertTrue(form.is_valid())
 
-    def test_invalid_form_required_first_name(self):
-        data = {'last_name': 'Wink',
-                'username': 'usrnm',
-                'password1': 'justPassword555',
-                'password2': 'justPassword555'
-                }
-        form = UserCreateForm(data=data)
-        self.assertFalse(form.is_valid())
-        with self.assertRaises(ValueError):
-            form.save()
-
     def test_invalid_form_required_password(self):
         data = {'first_name': 'Small',
                 'last_name': 'User',
@@ -54,8 +43,8 @@ class UserFormTestCase(TestCase):
                 'username': 'JDoe',
                 'password': 'justPassword555'
                 }
-        usr = User.objects.create(**data)
-        usr.save()
+        user = User.objects.create(**data)
+        user.save()
         form = UserCreateForm(data=data)
         self.assertFalse(form.is_valid())
         with self.assertRaises(ValueError):

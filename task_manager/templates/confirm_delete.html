@@ -15,6 +15,6 @@
           <p></p>
           <p></p>
           <input type="submit" class="btn btn-danger" value={% translate "Yes, delete" %}>
-          <a href={{ back_referer }} id="cancel" name={% translate "cancel" %} class="btn btn-default btn-link"><u>{% translate "Cancel" %}</u></a>
+          <a href={{request.META.HTTP_REFERER|escape}} id="cancel" name={% translate "cancel" %} class="btn btn-default btn-link"><u>{% translate "Cancel" %}</u></a>
        </form>
 {% endblock %}
