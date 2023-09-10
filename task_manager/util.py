@@ -1,4 +1,13 @@
 
+def validate_username(username):
+    def check_letter(ch: str) -> bool:
+        return any([ch.isdigit(),
+                    ch.isalpha(),
+                    ch in ('@', '.', '+', '-', '_')
+                    ])
+    return all([check_letter(s) for s in username])
+
+
 def set_status(field, status):
     class_style = {'valid': ' is-valid',
                    'invalid': 'is-invalid'

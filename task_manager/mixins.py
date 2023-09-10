@@ -26,7 +26,7 @@ class HandlePermissionMixin(LoginRequiredMixin):
             return redirect(self.redirect_url, code=302)
 
 
-class UserModifyMixin(UserPassesTestMixin, HandlePermissionMixin):
+class UserCanModifyMixin(UserPassesTestMixin, HandlePermissionMixin):
     redirect_field_name = reverse_lazy("users")
     required_permission_message = _(USER_HAVENOT_PERMISSIONS)
     required_login_message = _(NEED_TO_SIGNIN)

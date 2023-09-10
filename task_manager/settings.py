@@ -54,10 +54,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'task_manager',
     'bootstrap4',
-    'task_manager.user',
-    'task_manager.status',
-    'task_manager.task',
-    'task_manager.label',
+    'task_manager.users',
+    'task_manager.statuses',
+    'task_manager.tasks',
+    'task_manager.labels',
 ]
 
 MIDDLEWARE = [
@@ -96,7 +96,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'task_manager.wsgi.application'
 
 # User Model
-AUTH_USER_MODEL = 'user.user'
+AUTH_USER_MODEL = 'users.user'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

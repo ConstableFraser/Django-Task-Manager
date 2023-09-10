@@ -1,33 +1,33 @@
 # Makefile
 test:
 	poetry run python manage.py test task_manager.tests.test_views
-	poetry run python manage.py test task_manager.user.tests.test_forms
-	poetry run python manage.py test task_manager.user.tests.test_views
-	poetry run python manage.py test task_manager.label.tests.test_models
-	poetry run python manage.py test task_manager.label.tests.test_forms
-	poetry run python manage.py test task_manager.label.tests.test_views
-	poetry run python manage.py test task_manager.status.tests.test_models
-	poetry run python manage.py test task_manager.status.tests.test_forms
-	poetry run python manage.py test task_manager.status.tests.test_views
-	poetry run python manage.py test task_manager.task.tests.test_models
-	poetry run python manage.py test task_manager.task.tests.test_forms
-	poetry run python manage.py test task_manager.task.tests.test_views
+	poetry run python manage.py test task_manager.users.tests.test_forms
+	poetry run python manage.py test task_manager.users.tests.test_views
+	poetry run python manage.py test task_manager.labels.tests.test_models
+	poetry run python manage.py test task_manager.labels.tests.test_forms
+	poetry run python manage.py test task_manager.labels.tests.test_views
+	poetry run python manage.py test task_manager.statuses.tests.test_models
+	poetry run python manage.py test task_manager.statuses.tests.test_forms
+	poetry run python manage.py test task_manager.statuses.tests.test_views
+	poetry run python manage.py test task_manager.tasks.tests.test_models
+	poetry run python manage.py test task_manager.tasks.tests.test_forms
+	poetry run python manage.py test task_manager.tasks.tests.test_views
 
 lint:
 	poetry run flake8 task_manager
 	poetry run flake8 task_manager/tests/
-	poetry run flake8 task_manager/user/tests/
-	poetry run flake8 task_manager/label/tests/
-	poetry run flake8 task_manager/status/tests/
-	poetry run flake8 task_manager/task/tests/
+	poetry run flake8 task_manager/users/tests/
+	poetry run flake8 task_manager/labels/tests/
+	poetry run flake8 task_manager/statuses/tests/
+	poetry run flake8 task_manager/tasks/tests/
 	poetry run flake8 task_manager/settings.py
 
 test-coverage:
 	poetry run coverage run manage.py test ./task_manager/tests
-	poetry run coverage run manage.py test ./task_manager/user/tests
-	poetry run coverage run manage.py test ./task_manager/label/tests
-	poetry run coverage run manage.py test ./task_manager/status/tests
-	poetry run coverage run manage.py test ./task_manager/task/tests
+	poetry run coverage run manage.py test ./task_manager/users/tests
+	poetry run coverage run manage.py test ./task_manager/labels/tests
+	poetry run coverage run manage.py test ./task_manager/statuses/tests
+	poetry run coverage run manage.py test ./task_manager/tasks/tests
 	poetry run coverage report -m --include=task_manager/* --omit=task_manager/settings.py
 	poetry run coverage xml --include=task_manager/* --omit=task_manager/settings.py
 

@@ -1,0 +1,13 @@
+[
+    {
+        "model": "tasks.Task",
+        "pk": 199,
+        "fields": {
+            "name": "task#1",
+            "description": "task#1",
+            "status": 310,
+            "author": 155,
+            "created_at": "2023-09-22 22:10:09.174126+03:00"
+        }
+    }
+]

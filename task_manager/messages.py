@@ -3,7 +3,8 @@
 # COMMON STRINGS
 NEED_TO_SIGNIN = "You are not authorized! Please sign in."
 USERNAME_REQUIRED = "The username is required. 150 characters \
-                     or fewer. Letters, digits and @/./+/-/_ only"
+or fewer. Letters, digits and @/./+/-/_ only"
+USERNAME_INCORRECT = "Please enter correct username"
 PASSWORD_TOOLTIP = "Your password must contain at least 3 characters."
 CONFIRM_PASSWORD = "To confirm, please enter your password again."
 PASSWORD_NOT_MATCH = "The entered passwords do not match."
