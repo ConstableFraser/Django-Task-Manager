@@ -176,8 +176,8 @@ STATIC_URL = "/static/"
 if not DEBUG:
     STATIC_ROOT = '/opt/render/project/src/staticfiles/'
     STATICFILES_STORAGE = 'whitenoise.\
-                           storage.\
-                           CompressedManifestStaticFilesStorage'
+storage.\
+CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
