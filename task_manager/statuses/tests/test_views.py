@@ -1,17 +1,21 @@
 from django.test import TestCase
 from django.urls import reverse
+from parameterized import parameterized
 from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
 
 from task_manager.statuses.models import Status
 from task_manager.users.models import User
-from task_manager.messages import NEED_TO_SIGNIN, STATUS_EXIST
+from task_manager.messages import (NEED_TO_SIGNIN,
+                                   STATUS_EXIST,
+                                   STATUS_ISNOTDELETE)
 
 
 class StatusViewTestCase(TestCase):
-    fixtures = ['Status_statuses.json',
-                'Status_users.json',
-                'Status_tasks.json']
+    fixtures = ['Labels.json',
+                'Statuses.json',
+                'Users.json',
+                'Tasks.json']
 
     def setUp(self):
         self.status1 = Status.objects.get(name='Status#1')
@@ -20,16 +24,16 @@ class StatusViewTestCase(TestCase):
 
 
 class StatusViewTestNoAuth(StatusViewTestCase):
-    def test_view_crud_no_auth(self):
-        urls = (reverse('status_update', kwargs={"pk": self.status1.id}),
-                reverse('status_delete', kwargs={"pk": self.status1.id}),
-                reverse('status_create'),
-                reverse('statuses'))
-        for url in urls:
-            response = self.client.get(url)
-            self.assertEqual(response.status_code, 302)
-            response = self.client.get(reverse('login'))
-            self.assertContains(response, _(NEED_TO_SIGNIN))
+    @parameterized.expand([reverse('status_update', kwargs={"pk": 113}),
+                           reverse('status_delete', kwargs={"pk": 113}),
+                           reverse('status_create'),
+                           reverse('statuses')
+                           ])
+    def test_view_crud_no_auth(self, url):
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('login'))
+        self.assertContains(response, _(NEED_TO_SIGNIN))
 
 
 class StatusViewTestCase(StatusViewTestCase):
@@ -67,17 +71,27 @@ class StatusViewTestCase(StatusViewTestCase):
         response = self.client.post(url, {"name": "Status#2"})
         self.assertContains(response, _(STATUS_EXIST))
 
-    def test_view_status_valid_delete(self):
+    def test_view_status_post_delete(self):
         self.client.force_login(self.user_fred)
         url = reverse('status_delete', kwargs={"pk": self.status1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'confirm_delete.html')
-        status = Status.objects.get(id=self.status1.id)
-        self.assertTrue(status.delete())
+        self.client.post(url)
+        status1 = Status.objects.filter(id=self.status1.id).first()
+        self.assertFalse(status1)
 
     def test_view_status_non_delete(self):
         self.client.force_login(self.user_fred)
         status = Status.objects.get(id=110)
         with self.assertRaises(ProtectedError):
             self.assertFalse(status.delete())
+
+    def test_view_status_non_post_delete(self):
+        self.client.force_login(self.user_fred)
+        url = reverse('status_delete', kwargs={"pk": 110})
+        self.client.post(url)
+        status = Status.objects.filter(id=110).first()
+        self.assertTrue(status)
+        response = self.client.get(reverse('statuses'))
+        self.assertContains(response, _(STATUS_ISNOTDELETE))

@@ -1,0 +1,109 @@
+[
+    {
+        "model": "tasks.Task",
+        "pk": 1,
+        "fields": {
+            "name": "Nothing to do",
+            "description": "this is a text",
+            "status": 110,
+            "author": 150,
+            "executor": 150,
+            "labels": [1],
+            "created_at": "2023-09-22 22:10:09.174126+03:00"
+        }
+    },
+    {
+        "model": "tasks.Task",
+        "pk": 2,
+        "fields": {
+            "name": "complete a professional course",
+            "description": "solve all exercise and complete all projects",
+            "status": 111,
+            "author": 151,
+            "executor": 152,
+            "labels": [1, 2],
+            "created_at": "2023-07-10 19:12:09.184106+03:00"
+        }
+    },
+    {
+        "model": "tasks.Task",
+        "pk": 3,
+        "fields": {
+            "name": "do the something",
+            "description": "go there without knowing where and bring something without knowing what",
+            "status": 112,
+            "author": 151,
+            "created_at": "2023-08-10 11:16:09.184106+03:00"
+        }
+    },
+    {
+        "model": "tasks.Task",
+        "pk": 4,
+        "fields": {
+            "name": "Task#1",
+            "description": "Task#1",
+            "status": 114,
+            "author": 154,
+            "created_at": "2023-08-10 11:16:09.184106+03:00"
+        }
+    },
+    {
+        "model": "tasks.Task",
+        "pk": 11,
+        "fields": {
+            "name": "Task #1: learning theory",
+            "description": "Task #1: learning theory",
+            "status": 1,
+            "author": 10,
+            "executor": 10,
+            "labels": [3],
+            "created_at": "2023-09-22 22:10:09.174126+03:00"
+        }
+    },
+    {
+        "model": "tasks.Task",
+        "pk": 12,
+        "fields": {
+            "name": "Task #2: do practice",
+            "description": "Task #2: do practice",
+            "status": 2,
+            "author": 20,
+            "executor": 30,
+            "created_at": "2023-07-10 19:12:09.184106+03:00"
+        }
+    },
+    {
+        "model": "tasks.Task",
+        "pk": 13,
+        "fields": {
+            "name": "Task #3: repeat all",
+            "description": "Task #3: repeat all",
+            "status": 1,
+            "author": 10,
+            "labels": [1, 3],
+            "created_at": "2023-08-10 11:16:09.184106+03:00"
+        }
+    },
+    {
+        "model": "tasks.Task",
+        "pk": 199,
+        "fields": {
+            "name": "task#1",
+            "description": "task#1",
+            "status": 310,
+            "author": 155,
+            "created_at": "2023-09-22 22:10:09.174126+03:00"
+        }
+    },
+    {
+        "model": "tasks.Task",
+        "pk": 299,
+        "fields": {
+            "name": "Task#299",
+            "description": "Task#299",
+            "status": 114,
+            "author": 31,
+            "created_at": "2023-08-10 11:16:09.184106+03:00"
+        }
+    }
+]

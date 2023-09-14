@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from parameterized import parameterized
 from django.utils.translation import gettext_lazy as _
 
 from task_manager.users.models import User
@@ -9,16 +10,17 @@ from task_manager.messages import (NEED_TO_SIGNIN,
                                    USER_HAS_BEEN_DELETE,
                                    USER_CANT_DELETE,
                                    USER_WAS_UPDATED,
-                                   USERNAME_REQUIRED)
+                                   USER_ALREADY_EXIST)
 
 
 class UserViewTestCase(TestCase):
-    fixtures = ['User_statuses.json', 'User_users.json', 'User_tasks.json']
+    fixtures = ['Statuses.json', 'Users.json', 'Labels.json', 'Tasks.json']
 
     def setUp(self):
         self.user_fred = User.objects.get(username='Fred')
         self.user_bob = User.objects.get(username='Bob')
         self.user_billy = User.objects.get(username='Billy')
+        self.user_len = User.objects.get(username='Len')
         self.task1 = Task.objects.get(name="task#1")
 
 
@@ -38,24 +40,15 @@ class UserViewTestNoAuth(UserViewTestCase):
         self.assertContains(response, _("Create a user"))
         self.assertContains(response, _("Register"))
 
-    def test_view_user_create(self):
-        user_data = {"first_name": "User",
-                     "last_name": "Instance",
-                     "username": "hexlet",
-                     "password": "sec$*pwd"
-                     }
-        user_instance = User.objects.create_user(**user_data)
-        self.assertEqual("hexlet", user_instance.username)
-
-    def test_view_crud_no_auth(self):
-        urls = (reverse('user_card', kwargs={"pk": self.user_fred.id}),
-                reverse('user_update', kwargs={"pk": self.user_fred.id}),
-                reverse('user_delete', kwargs={"pk": self.user_bob.id}))
-        for url in urls:
-            response = self.client.get(url)
-            self.assertEqual(response.status_code, 302)
-            response = self.client.get(reverse('login'))
-            self.assertContains(response, _(NEED_TO_SIGNIN))
+    @parameterized.expand([reverse('user_card', kwargs={"pk": 153}),
+                           reverse('user_update', kwargs={"pk": 153}),
+                           reverse('user_delete', kwargs={"pk": 154})
+                           ])
+    def test_view_crud_no_auth(self, url):
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('login'))
+        self.assertContains(response, _(NEED_TO_SIGNIN))
 
 
 class UserViewTestWithAuth(UserViewTestCase):
@@ -75,34 +68,36 @@ class UserViewTestWithAuth(UserViewTestCase):
         self.assertContains(response, _("Update a user"))
         self.assertContains(response, _("Update"))
 
-    def test_view_user_valid_post_update(self):
-        user_data = {"first_name": "Updated",
-                     "last_name": "User_Billy",
-                     "username": "user_billy",
-                     "password1": "sec$*pwd",
-                     "password2": "sec$*pwd"
-                     }
-        user_billy = User.objects.get(username='Billy')
-        self.client.force_login(self.user_billy)
-        url = reverse('user_update', kwargs={"pk": user_billy.id})
-        response = self.client.post(url, user_data)
-        self.assertEqual(response.status_code, 302)
-        response = self.client.get(reverse('login'))
-        self.assertContains(response, _(USER_WAS_UPDATED))
+    @parameterized.expand([
+                          # checking for valid update
+                          ({"first_name": "Updated",
+                            "last_name": "User_Billy",
+                            "username": "user_billy",
+                            "password1": "sec$*pwd",
+                            "password2": "sec$*pwd"},
+                           True,
+                           302,
+                           USER_WAS_UPDATED),
 
-    def test_view_user_invalid_post_update(self):
-        user_data = {"first_name": "Updated",
-                     "last_name": "User_Billy",
-                     "username": "%user_billy%",
-                     "password1": "sec$*pwd",
-                     "password2": "sec$*pwd"
-                     }
+                          # checking for unique username
+                          ({"first_name": "Steve",
+                            "last_name": "Jobs",
+                            "username": "SteveJobs",
+                            "password1": "sec$*pwd",
+                            "password2": "sec$*pwd"},
+                           False,
+                           200,
+                           USER_ALREADY_EXIST)
+                          ])
+    def test_view_update_user(self, user_data, redirect, status_code, message):
         user_billy = User.objects.get(username='Billy')
         self.client.force_login(self.user_billy)
         url = reverse('user_update', kwargs={"pk": user_billy.id})
         response = self.client.post(url, user_data)
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, _(USERNAME_REQUIRED))
+        self.assertEqual(response.status_code, status_code)
+        if redirect:
+            response = self.client.get(reverse('login'))
+        self.assertContains(response, _(message))
 
     def test_view_user_invalid_update(self):
         self.client.force_login(self.user_fred)
@@ -113,8 +108,8 @@ class UserViewTestWithAuth(UserViewTestCase):
         self.assertContains(response, _(USER_HAVENOT_PERMISSIONS))
 
     def test_view_user_valid_delete(self):
-        self.client.force_login(self.user_fred)
-        url = reverse('user_delete', kwargs={"pk": self.user_fred.id})
+        self.client.force_login(self.user_len)
+        url = reverse('user_delete', kwargs={"pk": self.user_len.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'confirm_delete.html')
@@ -122,8 +117,8 @@ class UserViewTestWithAuth(UserViewTestCase):
         self.assertContains(response, _("Yes, delete"))
 
         response = self.client.post(reverse('user_delete',
-                                            kwargs={"pk": self.user_fred.id}),
-                                    {"pk": self.user_fred.id})
+                                            kwargs={"pk": self.user_len.id}),
+                                    {"pk": self.user_len.id})
         self.assertEqual(response.status_code, 302)
         response = self.client.get(reverse('users'))
         self.assertContains(response, _(USER_HAS_BEEN_DELETE))

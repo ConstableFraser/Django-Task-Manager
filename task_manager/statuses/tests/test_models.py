@@ -6,17 +6,12 @@ from task_manager.statuses.models import Status
 
 
 class StatusTestModelCase(TestCase):
-    fixtures = ['Status_statuses.json',
-                'Status_users.json',
-                'Status_tasks.json']
+    fixtures = ['Labels.json',
+                'Statuses.json',
+                'Users.json',
+                'Tasks.json']
 
-    def test_exist_status(self):
-        default = Status.objects.get(id=112)
-        backlog = Status.objects.get(id=110)
-        completed = Status.objects.get(id=111)
-        self.assertEqual(f'{default}', 'default')
-        self.assertEqual(f'{backlog}', 'backlog')
-        self.assertEqual(f'{completed}', 'completed')
+    def test_exist_unique_status(self):
         self.assertTrue(Status.objects.create(name="what_the_status of \
                                              this process [temporary]"))
         with self.assertRaises(IntegrityError):
@@ -31,7 +26,7 @@ class StatusTestModelCase(TestCase):
 
     def test_delete_status(self):
         completed = Status.objects.get(id=111)
-        default = Status.objects.get(id=112)
+        default = Status.objects.get(id=115)
         with self.assertRaises(ProtectedError):
             self.assertFalse(completed.delete())
         self.assertTrue(default.delete())

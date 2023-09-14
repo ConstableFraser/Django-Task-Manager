@@ -1,44 +1,37 @@
 from django.test import TestCase
+from parameterized import parameterized
 
 from task_manager.tasks.forms import TaskForm
-from task_manager.tasks.models import Task
 from task_manager.statuses.models import Status
 from task_manager.users.models import User
 
 
 class TaskFormTestCase(TestCase):
-    fixtures = ['Task_labels.json',
-                'Task_users.json',
-                'Task_statuses.json',
-                'Task_tasks.json']
+    fixtures = ['Labels.json',
+                'Users.json',
+                'Statuses.json',
+                'Tasks.json']
 
     def setUp(self):
         self.status = Status.objects.get(name='backlog')
         self.author = User.objects.get(username='JSmith')
-        self.status_data = {'name': 'task#1',
-                            'status': self.status,
-                            'author': self.author
-                            }
+        self.status_valid = Status.objects.get(id=500)
+        self.long_name = 'eat some more of these soft French rolls \
+                          and drink some tea eat some more of these \
+                          soft French rolls and drink some tea eat \
+                          some more of these soft French roll'
 
-    def test_valid_form(self):
-        form = TaskForm(data=self.status_data)
-        self.assertTrue(form.is_valid())
+    def test_with_params(self):
+        @parameterized.expand([(self.status_valid, TestCase.assertTrue),
+                               ({'name': 'task', 'status': ''},
+                                TestCase.assertFalse),
 
-    def test_invalid_form_required_fields(self):
-        data = {'name': '',
-                'status': self.status
-                }
-        form = TaskForm(data=data)
-        self.assertFalse(form.is_valid())
+                               ({'name': '', 'status': 111},
+                                TestCase.assertFalse),
 
-        data = {'name': 'task#1',
-                'status': ''
-                }
-        form = TaskForm(data=data)
-        self.assertFalse(form.is_valid())
-
-    def test_invalid_form_unique_name(self):
-        task = Task.objects.create(**self.status_data)
-        task.save()
-        form = TaskForm(data=self.status_data)
-        self.assertFalse(form.is_valid())
+                               ({'name': self.long_name, 'status': 111},
+                                TestCase.assertFalse),
+                               ])
+        def test_valid_invalid_form(self, data, func):
+            form = TaskForm(data=data)
+            func(self, form.is_valid())

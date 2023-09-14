@@ -3,8 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 
 from .models import User
-from ..util import validate_username, set_status
-from ..messages import USERNAME_INCORRECT
+from ..util import set_status
+from ..messages import USER_ALREADY_EXIST
 
 
 class UserCreateForm(UserCreationForm):
@@ -23,9 +23,11 @@ class UserCreateForm(UserCreationForm):
 class UserUpdateForm(UserCreateForm):
     def clean_username(self):
         username = self.cleaned_data["username"]
-        if not validate_username(username):
+        user_exist = User.objects.filter(username=username).first()
+
+        if user_exist and (user_exist != self.instance):
             set_status(self.fields['username'], 'invalid')
-            raise forms.ValidationError(_(USERNAME_INCORRECT))
+            raise forms.ValidationError(_(USER_ALREADY_EXIST))
         return username
 
     class Meta:

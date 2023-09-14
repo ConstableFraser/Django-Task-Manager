@@ -331,7 +331,7 @@ msgid "Create date"
 msgstr "Дата создания"
 
 msgid "A label with this name already exists."
-msgstr "Метка с таким именем уже существует"
+msgstr "Label с таким Имя уже существует."
 
 msgid "Can't delete label because it's in use"
 msgstr "Невозможно удалить метку, потому что она используется"

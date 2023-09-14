@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from parameterized import parameterized
 from django.utils.translation import gettext_lazy as _
 
 from task_manager.tasks.models import Task
@@ -11,28 +12,28 @@ from task_manager.messages import (NEED_TO_SIGNIN,
 
 
 class TaskViewTestCase(TestCase):
-    fixtures = ['Task_labels.json',
-                'Task_users.json',
-                'Task_statuses.json',
-                'Task_tasks.json']
+    fixtures = ['Labels.json',
+                'Users.json',
+                'Statuses.json',
+                'Tasks.json']
 
     def setUp(self):
         self.status = Status.objects.get(name='Status#1')
         self.user_fred = User.objects.get(username='Fred')
-        self.task = Task.objects.get(name='Task#1')
+        self.task = Task.objects.get(name='Task#299')
 
 
 class TaskViewTestNoAuth(TaskViewTestCase):
-    def test_view_crud_no_auth(self):
-        urls = (reverse('task_update', kwargs={"pk": self.task.id}),
-                reverse('task_delete', kwargs={"pk": self.task.id}),
-                reverse('task_create'),
-                reverse('tasks'))
-        for url in urls:
-            response = self.client.get(url)
-            self.assertEqual(response.status_code, 302)
-            response = self.client.get(reverse('login'))
-            self.assertContains(response, _(NEED_TO_SIGNIN))
+    @parameterized.expand([reverse('task_update', kwargs={"pk": 299}),
+                           reverse('task_delete', kwargs={"pk": 299}),
+                           reverse('task_create'),
+                           reverse('tasks')
+                           ])
+    def test_view_crud_no_auth(self, url):
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('login'))
+        self.assertContains(response, _(NEED_TO_SIGNIN))
 
 
 class TaskViewTestWithAuth(TaskViewTestCase):

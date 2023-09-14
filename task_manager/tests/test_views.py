@@ -7,7 +7,7 @@ from task_manager.users.models import User
 
 
 class LoginViewTestCase(TestCase):
-    fixtures = ['Register_users.json']
+    fixtures = ['Users.json']
 
     def setUp(self):
         self.user_fred = User.objects.get(username='Fred')
@@ -19,7 +19,7 @@ class LoginViewTestCase(TestCase):
         self.assertContains(response, _("Username"))
         self.assertContains(response, _("Password"))
 
-    def test_view_login_valid(self):
+    def test_view_login_get_valid(self):
         self.client.force_login(self.user_fred)
         response = self.client.get(reverse('home'))
         self.assertIn("[Freddy Mercury]", response.content.decode('utf8'))

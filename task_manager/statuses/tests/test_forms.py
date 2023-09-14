@@ -1,25 +1,18 @@
 from django.test import TestCase
+from parameterized import parameterized
 
 from task_manager.statuses.forms import StatusForm
-from task_manager.statuses.models import Status
 
 
 class StatusFormTestCase(TestCase):
-    def test_valid_form(self):
-        data = {'name': 'status#1'}
-        form = StatusForm(data=data)
-        self.assertTrue(form.is_valid())
-
-    def test_invalid_form_required_name(self):
-        data = {'name': ''}
-        form = StatusForm(data=data)
-        self.assertFalse(form.is_valid())
-
-    def test_invalid_form_unique_name(self):
-        data = {'name': 'status#1'}
-        stts = Status.objects.create(**data)
-        stts.save()
-        form = StatusForm(data=data)
-        self.assertFalse(form.is_valid())
-        with self.assertRaises(ValueError):
-            form.save()
+    @parameterized.expand([('status#1', TestCase.assertTrue),
+                           ('', TestCase.assertFalse),
+                           ('eat some more of these soft French rolls \
+                             and drink some tea eat some more of these \
+                             soft French rolls and drink some tea eat \
+                             some more of these soft French roll',
+                            TestCase.assertFalse),
+                           ])
+    def test_form(self, name, func):
+        form = StatusForm(data={'name': name})
+        func(self, form.is_valid())

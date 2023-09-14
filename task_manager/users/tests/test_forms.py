@@ -1,85 +1,77 @@
 from django.test import TestCase
+from parameterized import parameterized
 
-from task_manager.users.models import User
 from task_manager.users.forms import UserCreateForm
 
 
 class UserFormTestCase(TestCase):
-    def test_valid_form(self):
-        data = {'first_name': 'Jonathan',
-                'last_name': 'Doe',
-                'username': 'JDoe',
-                'password1': 'justPassword555',
-                'password2': 'justPassword555'
-                }
-        form = UserCreateForm(data=data)
-        self.assertTrue(form.is_valid())
+    fixtures = ['Labels.json',
+                'Users.json',
+                'Statuses.json',
+                'Tasks.json']
 
-    def test_valid_username(self):
-        data = {'first_name': 'Michel',
-                'last_name': 'Arriva',
-                'username': 'mike@',
-                'password1': 'justPassword555',
-                'password2': 'justPassword555'
-                }
-        form = UserCreateForm(data=data)
-        self.assertTrue(form.is_valid())
+    @parameterized.expand([
+                          # TEST INVALID DATA
+                          # checking for password2 is required
+                          ({'first_name': 'Jonathan',
+                            'last_name': 'Doe',
+                            'username': 'JDoe',
+                            'password1': 'jP*#dr5'},
+                           TestCase.assertFalse,
+                           True),
 
-    def test_invalid_form_required_password1(self):
-        data = {'first_name': 'Small',
-                'last_name': 'User',
-                'username1': 'smUser',
-                'password2': 'justPassword555'
-                }
-        form = UserCreateForm(data=data)
-        self.assertFalse(form.is_valid())
-        with self.assertRaises(ValueError):
-            form.save()
+                          # TEST INVALID DATA
+                          # checking for username is incorrect
+                          ({'first_name': 'Michel',
+                            'last_name': 'Arriva',
+                            'username': 'mike$#',
+                            'password1': 'jP*#dr5',
+                            'password2': 'jP*#dr5'},
+                           TestCase.assertFalse,
+                           True),
 
-    def test_invalid_form_required_password2(self):
-        data = {'first_name': 'Big',
-                'last_name': 'User',
-                'username': 'bigUser',
-                'password1': 'justPassword555'
-                }
-        form = UserCreateForm(data=data)
-        self.assertFalse(form.is_valid())
-        with self.assertRaises(ValueError):
-            form.save()
+                          # TEST INVALID DATA
+                          # checking for password1 is required
+                          ({'first_name': 'Jonathan',
+                            'last_name': 'Doe',
+                            'username': 'JDoe',
+                            'password2': 'jP*#dr5'},
+                           TestCase.assertFalse,
+                           True),
 
-    def test_invalid_form_unique_username(self):
-        data = {'first_name': 'Jo',
-                'last_name': 'User',
-                'username': 'JDoe',
-                'password': 'justPassword555'
-                }
-        user = User.objects.create(**data)
-        user.save()
-        form = UserCreateForm(data=data)
-        self.assertFalse(form.is_valid())
-        with self.assertRaises(ValueError):
-            form.save()
+                          # TEST INVALID DATA
+                          # checking for username is unique
+                          ({'first_name': 'Steve',
+                            'last_name': 'Jobs',
+                            'username': 'SteveJobs',
+                            'password1': 'jP*#dr5',
+                            'password2': 'jP*#dr5'},
+                           TestCase.assertFalse,
+                           True),
 
-    def test_invalid_username(self):
-        data = {'first_name': 'Herald',
-                'last_name': 'Rivia',
-                'username': 'Herald777isinvalid$',
-                'password1': 'justPassword555',
-                'password2': 'justPassword555'
-                }
-        form = UserCreateForm(data=data)
-        self.assertFalse(form.is_valid())
-        with self.assertRaises(ValueError):
-            form.save()
+                          # TEST INVALID DATA
+                          # checking for correct confirm the password
+                          ({'first_name': 'Herald',
+                            'last_name': 'Rivia',
+                            'username': 'Herald777',
+                            'password1': 'jP*#dr5',
+                            'password2': 'jP*#dr542ljkw'},
+                           TestCase.assertFalse,
+                           True),
 
-    def test_invalid_form_confirm_password(self):
-        data = {'first_name': 'Herald',
-                'last_name': 'Rivia',
-                'username': 'Herald777',
-                'password1': 'justPassword555',
-                'password2': 'invalidpwd2'
-                }
-        form = UserCreateForm(data=data)
-        self.assertFalse(form.is_valid())
-        with self.assertRaises(ValueError):
-            form.save()
+                          # TEST VALID DATA
+                          # checking for valid form
+                          ({'first_name': 'Mark',
+                            'last_name': 'Fegn',
+                            'username': 'Fegn',
+                            'password1': 'jP*#dr5',
+                            'password2': 'jP*#dr5'},
+                           TestCase.assertTrue,
+                           False),
+                          ])
+    def test_form_user(self, user_data, func, check_raise):
+        form = UserCreateForm(data=user_data)
+        func(self, form.is_valid())
+        if check_raise:
+            with self.assertRaises(ValueError):
+                form.save()

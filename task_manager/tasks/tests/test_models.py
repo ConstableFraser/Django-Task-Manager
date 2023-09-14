@@ -5,10 +5,10 @@ from task_manager.tasks.filter import TasksFilter
 
 
 class TaskTestModelCase(TestCase):
-    fixtures = ['Task_labels.json',
-                'Task_users.json',
-                'Task_statuses.json',
-                'Task_tasks.json']
+    fixtures = ['Labels.json',
+                'Users.json',
+                'Statuses.json',
+                'Tasks.json']
 
     def test_filter_task(self):
         qs = Task.objects.all()

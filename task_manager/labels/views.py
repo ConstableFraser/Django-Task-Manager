@@ -7,7 +7,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Label
-from ..tasks.models import Task
 from .forms import LabelForm
 from ..mixins import HandlePermissionMixin
 from ..messages import (LABEL_CREATED,
@@ -62,7 +61,8 @@ class LabelDeleteView(HandlePermissionMixin, DeleteView):
     extra_context = {'header': _("Delete label")}
 
     def post(self, request, *args, **kwargs):
-        tasks = Task.objects.filter(labels__in=[self.get_object()])
+        label = self.get_object()
+        tasks = label.task_set.exists()
         if not tasks:
             result = self.delete(request, *args, **kwargs)
             messages.success(self.request, self.success_message)

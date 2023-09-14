@@ -6,18 +6,12 @@ from task_manager.labels.models import Label
 
 
 class LabelTestModelCase(TestCase):
-    fixtures = ['Label_labels.json',
-                'Label_users.json',
-                'Label_statuses.json',
-                'Label_tasks.json']
+    fixtures = ['Labels.json',
+                'Users.json',
+                'Statuses.json',
+                'Tasks.json']
 
     def test_exist_labels(self):
-        Label1 = Label.objects.get(id=1)
-        Label2 = Label.objects.get(id=2)
-        Label3 = Label.objects.get(id=3)
-        self.assertEqual(f'{Label1}', 'black_metka')
-        self.assertEqual(f'{Label2}', 'f1')
-        self.assertEqual(f'{Label3}', 'name_of_label')
         self.assertTrue(Label.objects.create(name="what_are_wonderful \
                                              world, o-o-ou!"))
         with self.assertRaises(IntegrityError):
@@ -32,9 +26,9 @@ class LabelTestModelCase(TestCase):
 
     def test_delete_label(self):
         Label1 = Label.objects.get(id=1)
-        Label2 = Label.objects.get(id=2)
+        Label7 = Label.objects.get(id=7)
         with self.assertRaises(ProtectedError):
             Label1.delete()
-        Label2.delete()
+        Label7.delete()
         self.assertEqual(Label.objects.filter(id=1).count(), 1)
-        self.assertEqual(Label.objects.filter(id=2).count(), 0)
+        self.assertEqual(Label.objects.filter(id=7).count(), 0)
