@@ -21,7 +21,7 @@ class StatusListView(HandlePermissionMixin, ListView):
     model = Status
     context_object_name = 'statuses'
     ordering = ['-id']
-    template_name = 'status/index.html'
+    template_name = 'statuses/index.html'
     required_login_message = _(NEED_TO_SIGNIN)
     extra_context = {'header': _('Statuses')}
 
@@ -31,7 +31,7 @@ class StatusCreateView(HandlePermissionMixin,
                        CreateView):
     model = Status
     form_class = StatusForm
-    template_name = 'status/status_form.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('statuses')
     success_message = _(STATUS_CREATED)
     required_login_message = _(NEED_TO_SIGNIN)
@@ -44,7 +44,7 @@ class StatusUpdateView(HandlePermissionMixin,
                        UpdateView):
     model = Status
     form_class = StatusForm
-    template_name = 'status/status_form.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('statuses')
     success_message = _(STATUS_UPDATED)
     required_login_message = _(NEED_TO_SIGNIN)

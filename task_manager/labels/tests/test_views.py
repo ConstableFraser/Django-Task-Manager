@@ -1,12 +1,12 @@
 from django.test import TestCase
 from django.urls import reverse
 from parameterized import parameterized
-from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
 
 from task_manager.users.models import User
 from task_manager.labels.models import Label
 from task_manager.messages import (NEED_TO_SIGNIN,
+                                   LABEL_CREATED,
                                    LABEL_EXIST,
                                    LABEL_ISNTDELETE)
 
@@ -44,7 +44,7 @@ class LabelViewTestWithAuth(LabelViewTestCase):
         self.client.force_login(self.user_fred)
         response = self.client.get(reverse('labels'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'label/index.html')
+        self.assertTemplateUsed(response, 'labels/index.html')
         self.assertContains(response, _("Labels"))
         self.assertContains(response, _("Name"))
         self.assertContains(response, _("Creation date"))
@@ -54,22 +54,24 @@ class LabelViewTestWithAuth(LabelViewTestCase):
         self.client.force_login(self.user_fred)
         response = self.client.get(reverse('label_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'label/label_form.html')
+        self.assertTemplateUsed(response, 'form.html')
         self.assertContains(response, _("Create label"))
         self.assertContains(response, _("Create"))
 
     def test_view_label_create(self):
         self.client.force_login(self.user_fred)
-        label_data = {"name": "TesingCreatingLabel"}
-        label_instance = Label.objects.create(**label_data)
-        self.assertEqual("TesingCreatingLabel", label_instance.name)
+        url = reverse('label_create')
+        response = self.client.post(url, {"name": "TesingCreatingLabel"})
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('labels'))
+        self.assertContains(response, _(LABEL_CREATED))
 
     def test_view_label_valid_update(self):
         self.client.force_login(self.user_fred)
         url = reverse('label_update', kwargs={"pk": self.label1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'label/label_form.html')
+        self.assertTemplateUsed(response, 'form.html')
         self.assertContains(response, _("Update label"))
         self.assertContains(response, _("Update"))
         self.client.post(url, {"name": "TestLabelName"})
@@ -90,17 +92,6 @@ class LabelViewTestWithAuth(LabelViewTestCase):
         self.assertTemplateUsed(response, 'confirm_delete.html')
         self.assertContains(response, _("Delete label"))
         self.assertContains(response, _("Yes, delete"))
-
-    def test_view_label_delete(self):
-        self.client.force_login(self.user_fred)
-        label = Label.objects.get(name="Label#2")
-        self.assertTrue(label.delete())
-
-    def test_view_label_non_delete(self):
-        self.client.force_login(self.user_fred)
-        label = Label.objects.get(name="black_metka")
-        with self.assertRaises(ProtectedError):
-            self.assertFalse(label.delete())
 
     def test_view_label_post_delete(self):
         self.client.force_login(self.user_fred)

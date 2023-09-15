@@ -20,7 +20,7 @@ from ..messages import (LABEL_CREATED,
 class LabelListView(HandlePermissionMixin, ListView):
     model = Label
     context_object_name = 'labels'
-    template_name = 'label/index.html'
+    template_name = 'labels/index.html'
     ordering = ['-id']
     required_login_message = _(NEED_TO_SIGNIN)
     extra_context = {'header': _('Labels')}
@@ -31,7 +31,7 @@ class LabelCreateView(HandlePermissionMixin,
                       CreateView):
     model = Label
     form_class = LabelForm
-    template_name = 'label/label_form.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('labels')
     success_message = _(LABEL_CREATED)
     required_login_message = _(NEED_TO_SIGNIN)
@@ -44,7 +44,7 @@ class LabelUpdateView(HandlePermissionMixin,
                       UpdateView):
     model = Label
     form_class = LabelForm
-    template_name = 'label/label_form.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('labels')
     success_message = _(LABEL_UPDATED)
     required_login_message = _(NEED_TO_SIGNIN)

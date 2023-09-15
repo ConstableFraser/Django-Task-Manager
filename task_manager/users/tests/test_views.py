@@ -1,3 +1,4 @@
+import json
 from django.test import TestCase
 from django.urls import reverse
 from parameterized import parameterized
@@ -10,7 +11,10 @@ from task_manager.messages import (NEED_TO_SIGNIN,
                                    USER_HAS_BEEN_DELETE,
                                    USER_CANT_DELETE,
                                    USER_WAS_UPDATED,
+                                   USER_WAS_CREATED,
                                    USER_ALREADY_EXIST)
+
+FILE_FULLNAME = 'task_manager/fixtures/test_data.json'
 
 
 class UserViewTestCase(TestCase):
@@ -28,7 +32,7 @@ class UserViewTestNoAuth(UserViewTestCase):
     def test_view_user_list(self):
         response = self.client.get(reverse('users'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'user/index.html')
+        self.assertTemplateUsed(response, 'users/index.html')
         self.assertContains(response, _("Username"))
         self.assertContains(response, _("Fullname"))
         self.assertContains(response, _("Creation date"))
@@ -36,9 +40,21 @@ class UserViewTestNoAuth(UserViewTestCase):
     def test_view_user_get_create(self):
         response = self.client.get(reverse('user_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'user/user_form.html')
+        self.assertTemplateUsed(response, 'form.html')
         self.assertContains(response, _("Create a user"))
         self.assertContains(response, _("Register"))
+
+    def test_view_user_post_create(self):
+        response = self.client.post(reverse('user_create'),
+                                    {"first_name": "FirstName0913",
+                                     "last_name": "LastName9323",
+                                     "username": "username38242",
+                                     "password1": "2ios@9813RWGJK",
+                                     "password2": "2ios@9813RWGJK"
+                                     })
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('login'))
+        self.assertContains(response, _(USER_WAS_CREATED))
 
     @parameterized.expand([reverse('user_card', kwargs={"pk": 153}),
                            reverse('user_update', kwargs={"pk": 153}),
@@ -52,39 +68,31 @@ class UserViewTestNoAuth(UserViewTestCase):
 
 
 class UserViewTestWithAuth(UserViewTestCase):
+    users_data = json.load(open(FILE_FULLNAME))
+
     def test_view_user_signin(self):
         self.client.force_login(self.user_fred)
         url = reverse('user_card', kwargs={"pk": self.user_fred.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'user/user_detail.html')
+        self.assertTemplateUsed(response, 'users/user_detail.html')
 
     def test_view_user_valid_get_update(self):
         self.client.force_login(self.user_fred)
         url = reverse('user_update', kwargs={"pk": self.user_fred.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'user/user_form.html')
+        self.assertTemplateUsed(response, 'form.html')
         self.assertContains(response, _("Update a user"))
         self.assertContains(response, _("Update"))
 
     @parameterized.expand([
-                          # checking for valid update
-                          ({"first_name": "Updated",
-                            "last_name": "User_Billy",
-                            "username": "user_billy",
-                            "password1": "sec$*pwd",
-                            "password2": "sec$*pwd"},
+                          (users_data['valid_user'],
                            True,
                            302,
                            USER_WAS_UPDATED),
 
-                          # checking for unique username
-                          ({"first_name": "Steve",
-                            "last_name": "Jobs",
-                            "username": "SteveJobs",
-                            "password1": "sec$*pwd",
-                            "password2": "sec$*pwd"},
+                          (users_data['exist_user'],
                            False,
                            200,
                            USER_ALREADY_EXIST)
@@ -122,12 +130,6 @@ class UserViewTestWithAuth(UserViewTestCase):
         self.assertEqual(response.status_code, 302)
         response = self.client.get(reverse('users'))
         self.assertContains(response, _(USER_HAS_BEEN_DELETE))
-
-    def test_view_user_invalid_delete(self):
-        self.client.force_login(self.user_fred)
-        url = reverse('user_delete', kwargs={"pk": self.user_bob.id})
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 302)
 
     def test_view_user_post_nondelete(self):
         self.client.force_login(self.user_billy)

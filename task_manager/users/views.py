@@ -24,14 +24,14 @@ class UserDetailView(HandlePermissionMixin,
                      DetailView):
     model = User
     context_object_name = 'user'
-    template_name = 'user/user_detail.html'
+    template_name = 'users/user_detail.html'
     required_login_message = _(NEED_TO_SIGNIN)
 
 
 class UsersListView(ListView):
     model = User
     context_object_name = 'users'
-    template_name = 'user/index.html'
+    template_name = 'users/index.html'
     ordering = ['-id']
     extra_context = {'header': _('Users')}
 
@@ -39,7 +39,7 @@ class UsersListView(ListView):
 class UserCreateView(SuccessMessageMixin, CreateView):
     model = User
     form_class = UserCreateForm
-    template_name = 'user/user_form.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('login')
     success_message = _(USER_WAS_CREATED)
     extra_context = {'header': _("Create a user"),
@@ -51,7 +51,7 @@ class UserUpdateView(UserCanModifyMixin,
                      UpdateView):
     model = User
     form_class = UserUpdateForm
-    template_name = 'user/user_form.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('users')
     success_message = _(USER_WAS_UPDATED)
     extra_context = {'header': _("Update a user"),

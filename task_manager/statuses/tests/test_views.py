@@ -1,13 +1,13 @@
 from django.test import TestCase
 from django.urls import reverse
 from parameterized import parameterized
-from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
 
 from task_manager.statuses.models import Status
 from task_manager.users.models import User
 from task_manager.messages import (NEED_TO_SIGNIN,
                                    STATUS_EXIST,
+                                   STATUS_CREATED,
                                    STATUS_ISNOTDELETE)
 
 
@@ -41,26 +41,28 @@ class StatusViewTestCase(StatusViewTestCase):
         self.client.force_login(self.user_fred)
         response = self.client.get(reverse('statuses'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'status/index.html')
+        self.assertTemplateUsed(response, 'statuses/index.html')
 
     def test_view_status_get_create(self):
         self.client.force_login(self.user_fred)
         response = self.client.get(reverse('status_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'status/status_form.html')
+        self.assertTemplateUsed(response, 'form.html')
 
     def test_view_status_create(self):
         self.client.force_login(self.user_fred)
-        status_data = {"name": "TesingCreatingStatus"}
-        status_instance = Status.objects.create(**status_data)
-        self.assertEqual("TesingCreatingStatus", status_instance.name)
+        url = reverse('status_create')
+        response = self.client.post(url, {"name": "TesingCreatingStatus"})
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('statuses'))
+        self.assertContains(response, _(STATUS_CREATED))
 
     def test_view_status_valid_update(self):
         self.client.force_login(self.user_fred)
         url = reverse('status_update', kwargs={"pk": self.status1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'status/status_form.html')
+        self.assertTemplateUsed(response, 'form.html')
         self.client.post(url, {"name": "TestStatusName"})
         status = Status.objects.get(id=self.status1.id)
         self.assertEqual("TestStatusName", status.name)
@@ -80,12 +82,6 @@ class StatusViewTestCase(StatusViewTestCase):
         self.client.post(url)
         status1 = Status.objects.filter(id=self.status1.id).first()
         self.assertFalse(status1)
-
-    def test_view_status_non_delete(self):
-        self.client.force_login(self.user_fred)
-        status = Status.objects.get(id=110)
-        with self.assertRaises(ProtectedError):
-            self.assertFalse(status.delete())
 
     def test_view_status_non_post_delete(self):
         self.client.force_login(self.user_fred)

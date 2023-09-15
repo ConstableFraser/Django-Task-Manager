@@ -19,7 +19,7 @@ from ..messages import (TASK_CREATED,
 class TaskListView(HandlePermissionMixin, FilterView):
     model = Task
     filterset_class = TasksFilter
-    template_name = 'task/index.html'
+    template_name = 'tasks/index.html'
     extra_context = {'header': _('Tasks')}
     ordering = ['-id']
     required_login_message = _(NEED_TO_SIGNIN)
@@ -30,7 +30,7 @@ class TaskCreateView(HandlePermissionMixin,
                      CreateView):
     model = Task
     form_class = TaskForm
-    template_name = 'task/task_form.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('tasks')
     success_message = _(TASK_CREATED)
     required_login_message = _(NEED_TO_SIGNIN)
@@ -47,7 +47,7 @@ class TaskUpdateView(HandlePermissionMixin,
                      UpdateView):
     model = Task
     form_class = TaskForm
-    template_name = 'task/task_form.html'
+    template_name = 'form.html'
     success_url = reverse_lazy('tasks')
     success_message = _(TASK_UPDATED)
     required_login_message = _(NEED_TO_SIGNIN)
@@ -67,7 +67,7 @@ class TaskDeleteView(TaskModifyMixin,
 
 class TaskReadView(HandlePermissionMixin, DetailView):
     model = Task
-    template_name = 'task/task_card.html'
+    template_name = 'tasks/task_card.html'
     success_url = reverse_lazy('tasks')
     required_login_message = _(NEED_TO_SIGNIN)
     extra_content = {'header': _("View task")}

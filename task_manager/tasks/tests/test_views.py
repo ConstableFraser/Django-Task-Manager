@@ -8,6 +8,9 @@ from task_manager.users.models import User
 from task_manager.statuses.models import Status
 from task_manager.messages import (NEED_TO_SIGNIN,
                                    TASK_EXIST,
+                                   TASK_CREATED,
+                                   TASK_UPDATED,
+                                   TASK_DELETED,
                                    TASK_NON_AUTHOR)
 
 
@@ -41,50 +44,52 @@ class TaskViewTestWithAuth(TaskViewTestCase):
         self.client.force_login(self.user_fred)
         response = self.client.get(reverse('tasks'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'task/index.html')
+        self.assertTemplateUsed(response, 'tasks/index.html')
 
     def test_view_task_get_create(self):
         self.client.force_login(self.user_fred)
         response = self.client.get(reverse('task_create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'task/task_form.html')
+        self.assertTemplateUsed(response, 'form.html')
 
     def test_view_task_create(self):
         self.client.force_login(self.user_fred)
-        task_data = {'name': 'TestTaskCreating',
-                     'status': self.status,
-                     'author': self.user_fred
+        url = reverse('task_create')
+        task_data = {"name": "TestTaskName934",
+                     "status": self.status.id,
+                     "author": self.user_fred.id,
+                     "created_at": "2023-08-10 11:16:09.184106+03:00"
                      }
-        task_instance = Task.objects.create(**task_data)
-        self.assertEqual("TestTaskCreating", task_instance.name)
+        response = self.client.post(url, task_data)
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('tasks'))
+        self.assertContains(response, _(TASK_CREATED))
 
     def test_view_task_valid_card(self):
         self.client.force_login(self.user_fred)
         url = reverse('task_read', kwargs={"pk": self.task.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'task/task_card.html')
+        self.assertTemplateUsed(response, 'tasks/task_card.html')
 
     def test_view_task_valid_update(self):
         self.client.force_login(self.user_fred)
         url = reverse('task_update', kwargs={"pk": self.task.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'task/task_form.html')
-        task = Task.objects.get(id=self.task.id)
-        task.name = "TestTaskName"
-        task.save()
-        self.assertEqual("TestTaskName", task.name)
+        self.assertTemplateUsed(response, 'form.html')
+        response = self.client.post(url,
+                                    {"name": "NewNameOfTask",
+                                     "status": self.status.id,
+                                     "author": self.user_fred.id})
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('tasks'))
+        self.assertContains(response, _(TASK_UPDATED))
 
     def test_view_task_update_unique(self):
         self.client.force_login(self.user_fred)
-        self.task2 = Task.objects.create(name='task#2',
-                                         status=self.status,
-                                         author=self.user_fred
-                                         )
-        self.task2.save()
         url = reverse('task_update', kwargs={"pk": self.task.id})
-        response = self.client.post(url, {'name': 'task#2',
+        response = self.client.post(url, {'name': 'Nothing to do',
                                           'status': self.status,
                                           'author': self.user_fred}
                                     )
@@ -96,8 +101,10 @@ class TaskViewTestWithAuth(TaskViewTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'confirm_delete.html')
-        task = Task.objects.get(id=self.task.id)
-        self.assertTrue(task.delete())
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('tasks'))
+        self.assertContains(response, _(TASK_DELETED))
 
     def test_view_task_non_delete(self):
         url = reverse('task_delete', kwargs={"pk": self.task.id})

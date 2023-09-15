@@ -1,0 +1,55 @@
+{
+    "password1_required": {
+        "first_name": "Jonathan",
+        "last_name": "Doe",
+        "username": "JDoe",
+        "password2": "jP*#dr5"
+    },
+
+    "password2_required": {
+        "first_name": "Jonathan",
+        "last_name": "Doe",
+        "username": "JDoe",
+        "password1": "jP*#dr5"
+    },
+
+    "username_incorrect": {
+        "first_name": "Michel",
+        "last_name": "Arriva",
+        "username": "mike$#",
+        "password1": "jP*#dr5",
+        "password2": "jP*#dr5"
+    },
+
+    "username_unique": {
+        "first_name": "Steve",
+        "last_name": "Jobs",
+        "username": "SteveJobs",
+        "password1": "jP*#dr5",
+        "password2": "jP*#dr5"
+    },
+
+    "confirm_password": {
+        "first_name": "Herald",
+        "last_name": "Rivia",
+        "username": "Herald777",
+        "password1": "jP*#dr5",
+        "password2": "jP*#dr542ljkw"
+    },
+
+    "valid_user": {
+        "first_name": "Mark",
+        "last_name": "Fegn",
+        "username": "Fegn",
+        "password1": "jP*#dr5",
+        "password2": "jP*#dr5"
+    },
+
+    "exist_user": {
+        "first_name": "Steve",
+        "last_name": "Jobs",
+        "username": "SteveJobs",
+        "password1": "jP*#dr5",
+        "password2": "jP*#dr5"
+    }
+}

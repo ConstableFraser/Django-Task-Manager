@@ -1,77 +1,43 @@
+import json
 from django.test import TestCase
 from parameterized import parameterized
 
 from task_manager.users.forms import UserCreateForm
 
+FILE_FULLNAME = 'task_manager/fixtures/test_data.json'
+
 
 class UserFormTestCase(TestCase):
-    fixtures = ['Labels.json',
-                'Users.json',
-                'Statuses.json',
-                'Tasks.json']
+    fixtures = ['Users.json']
+    users_data = json.load(open(FILE_FULLNAME))
 
-    @parameterized.expand([
-                          # TEST INVALID DATA
-                          # checking for password2 is required
-                          ({'first_name': 'Jonathan',
-                            'last_name': 'Doe',
-                            'username': 'JDoe',
-                            'password1': 'jP*#dr5'},
-                           TestCase.assertFalse,
-                           True),
-
-                          # TEST INVALID DATA
-                          # checking for username is incorrect
-                          ({'first_name': 'Michel',
-                            'last_name': 'Arriva',
-                            'username': 'mike$#',
-                            'password1': 'jP*#dr5',
-                            'password2': 'jP*#dr5'},
-                           TestCase.assertFalse,
-                           True),
-
-                          # TEST INVALID DATA
-                          # checking for password1 is required
-                          ({'first_name': 'Jonathan',
-                            'last_name': 'Doe',
-                            'username': 'JDoe',
-                            'password2': 'jP*#dr5'},
-                           TestCase.assertFalse,
-                           True),
-
-                          # TEST INVALID DATA
-                          # checking for username is unique
-                          ({'first_name': 'Steve',
-                            'last_name': 'Jobs',
-                            'username': 'SteveJobs',
-                            'password1': 'jP*#dr5',
-                            'password2': 'jP*#dr5'},
-                           TestCase.assertFalse,
-                           True),
-
-                          # TEST INVALID DATA
-                          # checking for correct confirm the password
-                          ({'first_name': 'Herald',
-                            'last_name': 'Rivia',
-                            'username': 'Herald777',
-                            'password1': 'jP*#dr5',
-                            'password2': 'jP*#dr542ljkw'},
-                           TestCase.assertFalse,
-                           True),
-
-                          # TEST VALID DATA
-                          # checking for valid form
-                          ({'first_name': 'Mark',
-                            'last_name': 'Fegn',
-                            'username': 'Fegn',
-                            'password1': 'jP*#dr5',
-                            'password2': 'jP*#dr5'},
+    @parameterized.expand([(users_data['valid_user'],
                            TestCase.assertTrue,
                            False),
-                          ])
-    def test_form_user(self, user_data, func, check_raise):
+
+                           (users_data['password1_required'],
+                           TestCase.assertFalse,
+                           True),
+
+                           (users_data['password2_required'],
+                           TestCase.assertFalse,
+                           True),
+
+                           (users_data['username_incorrect'],
+                           TestCase.assertFalse,
+                           True),
+
+                           (users_data['username_unique'],
+                           TestCase.assertFalse,
+                           True),
+
+                           (users_data['confirm_password'],
+                           TestCase.assertFalse,
+                           True)
+                           ])
+    def test_form_user(self, user_data, func, commit):
         form = UserCreateForm(data=user_data)
         func(self, form.is_valid())
-        if check_raise:
+        if commit:
             with self.assertRaises(ValueError):
                 form.save()
