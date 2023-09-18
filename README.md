@@ -24,5 +24,10 @@ or watch the video:
 
 [![Watch the video](staticfiles/images/Figaro_preview.png)](https://youtu.be/aBok39kZT9Q)
 
-## tech stack
-djnago, python, poetry, gunicorn, jinja2, bootstrap, rollbar, whitenoise
+## technical information
+
+### logical schema of database
+![database](staticfiles/images/structure_db.png)
+
+### tech stack
+djnago, python, poetry, gunicorn, jinja2, postrgresql, bootstrap, rollbar, whitenoise
