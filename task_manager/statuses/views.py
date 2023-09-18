@@ -65,9 +65,8 @@ class StatusDeleteView(HandlePermissionMixin,
         status = self.get_object()
         tasks = status.task_set.exists()
         if not tasks:
-            result = self.delete(request, *args, **kwargs)
             messages.success(self.request, self.success_message)
-            return result
+            return super().post(request, *args, **kwargs)
         else:
             messages.error(self.request, _(STATUS_ISNOTDELETE))
             return redirect(reverse('statuses'), code=302)

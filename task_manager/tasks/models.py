@@ -9,14 +9,13 @@ class Task(models.Model):
     name = models.CharField(max_length=150,
                             null=False,
                             blank=False,
-                            unique=True
-                            )
+                            unique=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.ForeignKey(Status,
                                on_delete=models.PROTECT,
-                               null=False
-                               )
+                               null=False,
+                               blank=False)
     author = models.ForeignKey(User,
                                on_delete=models.PROTECT,
                                null=False,
@@ -24,8 +23,11 @@ class Task(models.Model):
     executor = models.ForeignKey(User,
                                  on_delete=models.PROTECT,
                                  null=True,
+                                 blank=True,
                                  related_name='taskTOdoer')
     labels = models.ManyToManyField(Label,
+                                    blank=True,
+                                    null=True,
                                     through='TaskToLabel',
                                     through_fields=('task', 'label'))
 

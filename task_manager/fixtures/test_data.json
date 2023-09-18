@@ -51,5 +51,17 @@
         "username": "SteveJobs",
         "password1": "jP*#dr5",
         "password2": "jP*#dr5"
+    },
+
+    "user_creating": {
+        "first_name": "FirstName0913",
+        "last_name": "LastName9323",
+        "username": "username38242",
+        "password1": "2ios@9813RWGJK",
+        "password2": "2ios@9813RWGJK"
+    },
+
+    "task_long_name": {
+         "name": "eat some more of these soft French rolls and drink some tea eat some more of these soft French rolls and drink some tea eat some more of these soft French roll"
     }
 }

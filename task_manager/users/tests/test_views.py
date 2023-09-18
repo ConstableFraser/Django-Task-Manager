@@ -14,7 +14,8 @@ from task_manager.messages import (NEED_TO_SIGNIN,
                                    USER_WAS_CREATED,
                                    USER_ALREADY_EXIST)
 
-FILE_FULLNAME = 'task_manager/fixtures/test_data.json'
+TEST_DATA_FILE_FULLNAME = 'task_manager/fixtures/test_data.json'
+users_data = json.load(open(TEST_DATA_FILE_FULLNAME))
 
 
 class UserViewTestCase(TestCase):
@@ -46,12 +47,7 @@ class UserViewTestNoAuth(UserViewTestCase):
 
     def test_view_user_post_create(self):
         response = self.client.post(reverse('user_create'),
-                                    {"first_name": "FirstName0913",
-                                     "last_name": "LastName9323",
-                                     "username": "username38242",
-                                     "password1": "2ios@9813RWGJK",
-                                     "password2": "2ios@9813RWGJK"
-                                     })
+                                    users_data['user_creating'])
         self.assertEqual(response.status_code, 302)
         response = self.client.get(reverse('login'))
         self.assertContains(response, _(USER_WAS_CREATED))
@@ -68,8 +64,6 @@ class UserViewTestNoAuth(UserViewTestCase):
 
 
 class UserViewTestWithAuth(UserViewTestCase):
-    users_data = json.load(open(FILE_FULLNAME))
-
     def test_view_user_signin(self):
         self.client.force_login(self.user_fred)
         url = reverse('user_card', kwargs={"pk": self.user_fred.id})

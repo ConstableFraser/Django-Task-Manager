@@ -24,10 +24,5 @@ or watch the video:
 
 [![Watch the video](staticfiles/images/Figaro_preview.png)](https://youtu.be/aBok39kZT9Q)
 
-## technical information
-
-### info about structure of db
-![database](staticfiles/images/structure_db.png)
-
-### tech stack
+## tech stack
 djnago, python, poetry, gunicorn, jinja2, bootstrap, rollbar, whitenoise

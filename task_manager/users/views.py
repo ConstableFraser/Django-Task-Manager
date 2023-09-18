@@ -75,4 +75,4 @@ class UserDeleteView(UserCanModifyMixin,
             return redirect(reverse('users'), code=302)
         else:
             messages.success(self.request, self.success_message)
-            return self.delete(request, *args, **kwargs)
+            return super().post(request, *args, **kwargs)

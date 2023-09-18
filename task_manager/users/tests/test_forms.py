@@ -4,12 +4,12 @@ from parameterized import parameterized
 
 from task_manager.users.forms import UserCreateForm
 
-FILE_FULLNAME = 'task_manager/fixtures/test_data.json'
+TEST_DATA_FILE_FULLNAME = 'task_manager/fixtures/test_data.json'
+users_data = json.load(open(TEST_DATA_FILE_FULLNAME))
 
 
 class UserFormTestCase(TestCase):
     fixtures = ['Users.json']
-    users_data = json.load(open(FILE_FULLNAME))
 
     @parameterized.expand([(users_data['valid_user'],
                            TestCase.assertTrue,

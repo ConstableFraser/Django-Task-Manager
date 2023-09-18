@@ -2,7 +2,6 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from .models import Status
-from ..util import set_status
 from ..messages import STATUS_EXIST
 
 
@@ -15,7 +14,7 @@ class StatusForm(forms.ModelForm):
         cleaned_data = super(StatusForm, self).clean()
         name = cleaned_data.get("name")
         if Status.objects.filter(name=name).exclude(id=self.instance.id):
-            set_status(self.fields['name'], 'invalid')
+            self.add_error("name", _(STATUS_EXIST))
             raise forms.ValidationError(_(STATUS_EXIST))
 
         return cleaned_data

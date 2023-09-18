@@ -62,11 +62,9 @@ class LabelDeleteView(HandlePermissionMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         label = self.get_object()
-        tasks = label.task_set.exists()
-        if not tasks:
-            result = self.delete(request, *args, **kwargs)
+        if not label.task_set.exists():
             messages.success(self.request, self.success_message)
-            return result
+            return super().post(request, *args, **kwargs)
         else:
             messages.error(self.request, _(LABEL_ISNTDELETE))
             return redirect(reverse('labels'), code=302)

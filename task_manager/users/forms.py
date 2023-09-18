@@ -3,7 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import UserCreationForm
 
 from .models import User
-from ..util import set_status
 from ..messages import USER_ALREADY_EXIST
 
 
@@ -26,7 +25,7 @@ class UserUpdateForm(UserCreateForm):
         user_exist = User.objects.filter(username=username).first()
 
         if user_exist and (user_exist != self.instance):
-            set_status(self.fields['username'], 'invalid')
+            self.add_error("username", "")
             raise forms.ValidationError(_(USER_ALREADY_EXIST))
         return username
 
