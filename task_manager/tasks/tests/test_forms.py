@@ -3,9 +3,10 @@ from django.test import TestCase
 from parameterized import parameterized
 
 from task_manager.tasks.forms import TaskForm
+from task_manager.constants import TEST_DATA_FILE_FULLNAME
 
-TEST_DATA_FILE_FULLNAME = 'task_manager/fixtures/test_data.json'
-users_data = json.load(open(TEST_DATA_FILE_FULLNAME))
+with open(TEST_DATA_FILE_FULLNAME) as f:
+    users_data = json.load(f)
 
 
 class TaskFormTestCase(TestCase):

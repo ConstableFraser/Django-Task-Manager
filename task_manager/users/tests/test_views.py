@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from task_manager.users.models import User
 from task_manager.tasks.models import Task
+from task_manager.constants import TEST_DATA_FILE_FULLNAME
 from task_manager.messages import (NEED_TO_SIGNIN,
                                    USER_HAVENOT_PERMISSIONS,
                                    USER_HAS_BEEN_DELETE,
@@ -14,8 +15,10 @@ from task_manager.messages import (NEED_TO_SIGNIN,
                                    USER_WAS_CREATED,
                                    USER_ALREADY_EXIST)
 
-TEST_DATA_FILE_FULLNAME = 'task_manager/fixtures/test_data.json'
-users_data = json.load(open(TEST_DATA_FILE_FULLNAME))
+from task_manager.constants import TEST_DATA_FILE_FULLNAME
+
+with open(TEST_DATA_FILE_FULLNAME) as f:
+    users_data = json.load(f)
 
 
 class UserViewTestCase(TestCase):
